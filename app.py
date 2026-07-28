@@ -182,7 +182,7 @@ with tab1:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #818cf8; margin: 0 0 5px 0;">🌐 Cross-Asset Real-Time Feed (24/7 Live with Fallback Engine)</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Pemantauan otomatis dengan sistem pengaman data (*fail-safe caching*) untuk mencegah kegagalan kalkulasi.</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Pemantauan otomatis dengan sistem pengaman data untuk mencegah kegagalan kalkulasi.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -214,11 +214,10 @@ with tab2:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #38bdf8; margin: 0 0 5px 0;">🎯 Ensemble Probability Matrix & Model Confidence Score</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Penghitungan probabilitas mutlak dilengkapi skor tingkat keyakinan model (*Model Confidence Score*).</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Penghitungan probabilitas mutlak dilengkapi skor tingkat keyakinan model.</p>
         </div>
     """, unsafe_allow_html=True)
     
-    # Ensemble Calculation
     rate_press = (data['TNX']['pct'] * 4.0) + (data['DXY']['pct'] * 2.5)
     macro_risk = (data['VIX']['pct'] * 1.5) - (data['SPX']['pct'] * 0.8)
     raw_hold = 65.0 + rate_press - (macro_risk * 0.5)
@@ -226,7 +225,6 @@ with tab2:
     cut_prob = round((100.0 - hold_prob) * 0.85, 1)
     hike_prob = round(100.0 - hold_prob - cut_prob, 1)
     
-    # Model Confidence Score calculation based on VIX stability & price consistency
     vix_val = data['VIX']['price']
     confidence_score = round(min(95.0, max(60.0, 88.0 - abs(vix_val - 15.0) * 1.5)), 1)
     
@@ -241,14 +239,14 @@ with tab2:
     with c3:
         st.metric("Hike Prob", f"{hike_prob:.1f}%")
     with c4:
-        st.metric("Model Confidence Score", f"{confidence_score}%", "High Accuracy")
+        st.metric("Model Confidence", f"{confidence_score}%", "High Accuracy")
         
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown(f"""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">🛡️ Evaluasi Risiko & Skenario Alternatif</h4>
         <p><b>Sikap Konsensus Model:</b> <span style="color: #34d399;">{fed_stance}</span></p>
-        <p><b>Tingkat Keyakinan (Confidence Score): {confidence_score}%</b>. Skor ini dihitung secara dinamis berdasarkan stabilitas volatilitas pasar (VIX) dan konvergensi data proksi makro. Jika VIX melonjak di atas 20, indeks keyakinan menyesuaikan diri untuk mengantisipasi potensi <i>tail risk</i> atau guncangan tak terduga.</p>
+        <p><b>Tingkat Keyakinan (Confidence Score): {confidence_score}%</b>. Skor ini dihitung secara dinamis berdasarkan stabilitas volatilitas pasar (VIX) dan konvergensi data makro.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -257,7 +255,7 @@ with tab3:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #fbbf24; margin: 0 0 5px 0;">🪙 XAUUSD Deep Macro & FOMC Impact Analysis</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis mendalam emas berdasarkan Imbal Hasil Riil, DXY, dan akumulasi cadangan bank sentral.</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis mendalam emas berdasarkan Imbal Hasil Riil, DXY, dan akumulasi bank sentral.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -267,8 +265,8 @@ with tab3:
     st.markdown(f"""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">Rekomendasi Aksi: <span class="{badge_class}">{gold_action}</span></h4>
-        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Emas (XAUUSD) tidak memiliki kupon atau imbal hasil internal[span_3](start_span)[span_3](end_span). Oleh karena itu, valuasinya sangat berbanding terbalik dengan <b>Real Yields (Imbal Hasil Riil)</b> dan <b>Indeks Dolar (DXY)</b>[span_4](start_span)[span_4](end_span). Saat FOMC mengisyaratkan pelonggaran (*Dovish*), biaya peluang (*opportunity cost*) memegang emas turun drastis, memicu arus masuk institusional secara masif.</p>
-        <p><b>Faktor Penyangga Jangka Panjang:</b> Pembelian cadangan emas oleh bank sentral global (*Central Bank Reserves Buying*) berfungsi sebagai lantai harga yang kokoh terhadap guncangan pasar[span_5](start_span)[span_5](end_span).</p>
+        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Emas (XAUUSD) tidak memiliki kupon atau imbal hasil internal. Oleh karena itu, valuasinya sangat berbanding terbalik dengan Real Yields dan Indeks Dolar (DXY). Saat FOMC mengisyaratkan pelonggaran, biaya peluang memegang emas turun drastis, memicu arus masuk institusional.</p>
+        <p><b>Faktor Penyangga Jangka Panjang:</b> Pembelian cadangan emas oleh bank sentral global berfungsi sebagai lantai harga yang kokoh terhadap guncangan pasar.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -277,7 +275,7 @@ with tab4:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #f43f5e; margin: 0 0 5px 0;">💱 USDJPY & Carry Trade Mechanics</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis selisih suku bunga AS-Jepang dan risiko likuidasi posisi <i>carry trade</i>[span_6](start_span)[span_6](end_span).</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis selisih suku bunga AS-Jepang dan risiko likuidasi posisi carry trade.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -286,7 +284,7 @@ with tab4:
     st.markdown(f"""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">Rekomendasi Aksi: <span class="{badge_class}">{usdjpy_action}</span></h4>
-        <p><b>Alasan Fundamental & Transmisi FOMC:</b> USDJPY digerakkan oleh <i>Interest Rate Differential</i>. Ketika The Fed melonggarkan suku bunga sementara Bank Jepang mempertahankan kebijakan ketat atau normalisasi, selisih imbal hasil menyempit. Hal ini memicu likuidasi besar-besaran pada strategi <i>carry trade</i> (meminjam Yen murah untuk beli aset USD), yang mengakibatkan penguatan kilat pada mata uang Yen[span_7](start_span)[span_7](end_span).</p>
+        <p><b>Alasan Fundamental & Transmisi FOMC:</b> USDJPY digerakkan oleh perbedaan suku bunga. Ketika The Fed melonggarkan suku bunga sementara Bank Jepang mempertahankan kebijakan ketat, selisih imbal hasil menyempit, memicu likuidasi posisi carry trade dan penguatan tajam pada mata uang Yen.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -295,7 +293,7 @@ with tab5:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #10b981; margin: 0 0 5px 0;">₿ BTCUSD & Global Liquidity Sponge Model</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Bitcoin sebagai aset beta-tinggi yang digerakkan oleh premi likuiditas global[span_8](start_span)[span_8](end_span).</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Bitcoin sebagai aset beta-tinggi yang digerakkan oleh premi likuiditas global.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -304,7 +302,7 @@ with tab5:
     st.markdown(f"""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">Rekomendasi Aksi: <span class="{badge_class}">{btc_action}</span></h4>
-        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Berdasarkan formula premi likuiditas ($Asset Price = Intrinsic Value + Liquidity Premium$), harga aset berisiko tinggi sangat bergantung pada suplai uang beredar ($M \\times V$)[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span). Kebijakan FOMC yang akomodatif menambah likuiditas sistemik, yang langsung bertindak sebagai bahan bakar utama bagi lonjakan valuasi Bitcoin[span_11](start_span)[span_11](end_span).</p>
+        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Harga aset berisiko tinggi sangat bergantung pada suplai uang beredar di sistem keuangan global. Kebijakan FOMC yang akomodatif menambah likuiditas sistemik, yang bertindak sebagai bahan bakar utama bagi lonjakan valuasi Bitcoin.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -342,6 +340,6 @@ with tab7:
     st.markdown("""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">Sintesis Akhir Engine</h4>
-        <p>Sistem ini menggabungkan analisis proksi makro, manajemen kesalahan otomatis (*fail-safe fallback*), serta penilaian tingkat keyakinan dinamis untuk menghasilkan probabilitas tertinggi dalam membaca arah pasar lintas aset menjelang pertemuan FOMC.</p>
+        <p>Sistem ini menggabungkan analisis proksi makro, manajemen kesalahan otomatis melalui fail-safe fallback, serta penilaian tingkat keyakinan dinamis untuk menghasilkan probabilitas terbaik dalam membaca arah pasar lintas aset menjelang pertemuan FOMC.</p>
     </div>
     """, unsafe_allow_html=True)
