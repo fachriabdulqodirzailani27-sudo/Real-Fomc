@@ -91,7 +91,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # Ticker Berita Real-Time Makro
 st.markdown("""
     <div class="news-ticker">
-        🚨 <b>INSTITUTIONAL WIRE:</b> Bayesian Probability Weighting Active • COT Smart Money Net Position Filter Synced • Liquidity Premium & Dual Mandate Active[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span).
+        🚨 <b>INSTITUTIONAL WIRE:</b> Bayesian Probability Weighting Active • COT Smart Money Net Position Filter Synced • Liquidity Premium & Dual Mandate Active.
     </div>
 """, unsafe_allow_html=True)
 
@@ -123,8 +123,8 @@ with st.sidebar:
     - **Live Matrix:** Lintas Sektor
     - **FOMC & Bayesian:** Probabilitas & Skor Keyakinan
     - **XAUUSD Core:** Analisis Emas Mendalam
-    - **USDJPY & Carry:** Analisis Forex Core[span_6](start_span)[span_6](end_span)
-    - **BTCUSD & Liquidity:** Spons Likuiditas[span_7](start_span)[span_7](end_span)
+    - **USDJPY & Carry:** Analisis Forex Core
+    - **BTCUSD & Liquidity:** Spons Likuiditas
     - **Backlab:** Validasi Historis
     """)
 
@@ -246,7 +246,7 @@ with tab2:
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">🛡️ Bayesian Filtering & Smart Money (COT Filter)</h4>
         <p><b>Sikap Konsensus Model:</b> <span style="color: #34d399;">{fed_stance}</span></p>
-        <p><b>Tingkat Keyakinan Dinamis (Confidence Score): {confidence_score}%</b>. Model memperbarui probabilitas secara adaptif menggunakan pembaruan statistik Bayesian dan filter posisi institusional (COT Large Speculators)[span_8](start_span)[span_8](end_span).</p>
+        <p><b>Tingkat Keyakinan Dinamis (Confidence Score): {confidence_score}%</b>. Model memperbarui probabilitas secara adaptif menggunakan pembaruan statistik Bayesian dan filter posisi institusional (COT Large Speculators).</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -255,7 +255,7 @@ with tab3:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #fbbf24; margin: 0 0 5px 0;">🪙 XAUUSD Deep Macro & FOMC Impact Analysis</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis mendalam emas berdasarkan Imbal Hasil Riil, DXY, dan akumulasi bank sentral[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span).</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis mendalam emas berdasarkan Imbal Hasil Riil, DXY, dan akumulasi bank sentral.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -265,8 +265,8 @@ with tab3:
     st.markdown(f"""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">Rekomendasi Aksi: <span class="{badge_class}">{gold_action}</span></h4>
-        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Emas (XAUUSD) tidak memiliki imbal hasil internal[span_12](start_span)[span_12](end_span). Valuasinya berbanding terbalik dengan Real Yields dan Indeks Dolar (DXY)[span_13](start_span)[span_13](end_span). Saat FOMC mengisyaratkan pelonggaran, biaya peluang memegang emas turun drastis, memicu arus masuk institusional.</p>
-        <p><b>Faktor Penyangga Jangka Panjang:</b> Pembelian cadangan emas oleh bank sentral global berfungsi sebagai lantai harga yang kokoh terhadap guncangan pasar[span_14](start_span)[span_14](end_span).</p>
+        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Emas (XAUUSD) tidak memiliki imbal hasil internal. Valuasinya berbanding terbalik dengan Real Yields dan Indeks Dolar (DXY). Saat FOMC mengisyaratkan pelonggaran, biaya peluang memegang emas turun drastis, memicu arus masuk institusional.</p>
+        <p><b>Faktor Penyangga Jangka Panjang:</b> Pembelian cadangan emas oleh bank sentral global berfungsi sebagai lantai harga yang kokoh terhadap guncangan pasar.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -275,7 +275,7 @@ with tab4:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #f43f5e; margin: 0 0 5px 0;">💱 USDJPY & Carry Trade Mechanics</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis selisih suku bunga AS-Jepang dan risiko likuidasi posisi carry trade[span_15](start_span)[span_15](end_span).</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Analisis selisih suku bunga AS-Jepang dan risiko likuidasi posisi carry trade.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -284,7 +284,7 @@ with tab4:
     st.markdown(f"""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">Rekomendasi Aksi: <span class="{badge_class}">{usdjpy_action}</span></h4>
-        <p><b>Alasan Fundamental & Transmisi FOMC:</b> USDJPY digerakkan oleh perbedaan suku bunga. Ketika The Fed melonggarkan suku bunga sementara Bank Jepang mempertahankan kebijakan ketat, selisih imbal hasil menyempit, memicu likuidasi posisi carry trade dan penguatan tajam pada mata uang Yen[span_16](start_span)[span_16](end_span).</p>
+        <p><b>Alasan Fundamental & Transmisi FOMC:</b> USDJPY digerakkan oleh perbedaan suku bunga. Ketika The Fed melonggarkan suku bunga sementara Bank Jepang mempertahankan kebijakan ketat, selisih imbal hasil menyempit, memicu likuidasi posisi carry trade dan penguatan tajam pada mata uang Yen.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -293,7 +293,7 @@ with tab5:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #10b981; margin: 0 0 5px 0;">₿ BTCUSD & Global Liquidity Sponge Model</h3>
-            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Bitcoin sebagai aset beta-tinggi yang digerakkan oleh premi likuiditas global[span_17](start_span)[span_17](end_span).</p>
+            <p style="color: #9ca3af; margin: 0; font-size: 13px;">Bitcoin sebagai aset beta-tinggi yang digerakkan oleh premi likuiditas global.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -302,7 +302,7 @@ with tab5:
     st.markdown(f"""
     <div class="card-box">
         <h4 style="color: #ff8c00; margin-top:0;">Rekomendasi Aksi: <span class="{badge_class}">{btc_action}</span></h4>
-        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Harga aset berisiko tinggi sangat bergantung pada suplai uang beredar di sistem keuangan global[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span). Kebijakan FOMC yang akomodatif menambah likuiditas sistemik, yang bertindak sebagai bahan bakar utama bagi lonjakan valuasi Bitcoin[span_20](start_span)[span_20](end_span).</p>
+        <p><b>Alasan Fundamental & Transmisi FOMC:</b> Harga aset berisiko tinggi sangat bergantung pada suplai uang beredar di sistem keuangan global. Kebijakan FOMC yang akomodatif menambah likuiditas sistemik, yang bertindak sebagai bahan bakar utama bagi lonjakan valuasi Bitcoin.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -339,7 +339,7 @@ with tab7:
     
     st.markdown("""
     <div class="card-box">
-        <h4 style="color: #ff8c00; margin-top:0;">Sintesis Akhir Engine (Level Max)</h4>
+        <h4 style="color: #ff8c00; margin-top:0;">Sintesis Akhir Engine</h4>
         <p>Sistem ini menggabungkan seluruh kerangka makro institusional level tertinggi, pemfilteran posisi Smart Money (COT), pembaruan statistik Bayesian, serta pengamanan data otomatis untuk mencapai probabilitas kebenaran optimal di kisaran 89.5%.</p>
     </div>
     """, unsafe_allow_html=True)
