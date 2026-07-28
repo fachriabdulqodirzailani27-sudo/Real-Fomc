@@ -11,11 +11,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS: Desain Terminal Bloomberg Modern, Luas, Elegan, & Profesional
+# Custom CSS: Desain Terminal Bloomberg Modern, Bersih, Luas, & Elegan
 st.markdown("""
     <style>
     .main { background-color: #07090e; color: #f3f4f6; font-family: 'Inter', sans-serif; }
-    .stTabs [data-baseweb="tab-list"] { gap: 8px; background-color: #111827; padding: 12px; border-radius: 8px; border: 1px: solid #374151; }
+    .stTabs [data-baseweb="tab-list"] { gap: 8px; background-color: #111827; padding: 12px; border-radius: 8px; border: 1px solid #374151; }
     .stTabs [data-baseweb="tab"] {
         background-color: #1f2937;
         border-radius: 6px;
@@ -84,7 +84,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # Ticker Berita Real-Time Makro
 st.markdown("""
     <div class="news-ticker">
-        🚨 <b>INSTITUTIONAL WIRE:</b> The Fed Data-Dependent Stance Active[span_5](start_span)[span_5](end_span) • Core PCE Trailing Near Target[span_6](start_span)[span_6](end_span) • Real Yields & Liquidity Premium Driving Cross-Asset Flows[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span) • XAUUSD Safe-Haven Demand Resilient[span_9](start_span)[span_9](end_span).
+        🚨 <b>INSTITUTIONAL WIRE:</b> The Fed Data-Dependent Stance Active • Core PCE Trailing Near Target • Real Yields & Liquidity Premium Driving Cross-Asset Flows • XAUUSD Safe-Haven Demand Resilient.
     </div>
 """, unsafe_allow_html=True)
 
@@ -113,10 +113,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### 🧭 NAVIGATION GUIDE")
     st.markdown("""
-    - **Live Market Matrix:** Pantauan aset lintas sektor[span_10](start_span)[span_10](end_span).
-    - **FOMC & Gold Engine:** Probabilitas suku bunga, sikap Hawk/Dove[span_11](start_span)[span_11](end_span), dan sinyal Buy/Sell Gold.
-    - **Yield & Liquidity:** Analisis kurva imbal hasil[span_12](start_span)[span_12](end_span) dan likuiditas pendanaan[span_13](start_span)[span_13](end_span).
-    - **Central Bank & COT:** Dual Mandate[span_14](start_span)[span_14](end_span) & spekulator berjangka[span_15](start_span)[span_15](end_span).
+    - **Live Market Matrix:** Pantauan aset lintas sektor.
+    - **FOMC & Gold Engine:** Probabilitas suku bunga, sikap Hawk/Dove, dan sinyal Buy/Sell Gold.
+    - **Yield & Liquidity:** Analisis kurva imbal hasil dan likuiditas pendanaan.
+    - **Central Bank & COT:** Dual Mandate & spekulator berjangka.
     - **Backtesting Lab:** Validasi historis 5 tahun.
     - **1-Mo Strategy:** Proyeksi strategis XAUUSD makro.
     """)
@@ -159,7 +159,7 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 # --- TAB 1: LIVE MARKET MATRIX ---
 with tab1:
     st.markdown("### 📊 Cross-Asset Real-Time Feed (24/7 Live)")
-    st.markdown("Pemantauan instrumen makro lintas aset (*Cross-Asset Framework*)[span_16](start_span)[span_16](end_span) untuk membaca ketimpangan struktural pasar.")
+    st.markdown("Pemantauan instrumen makro lintas aset untuk membaca ketimpangan struktural pasar.")
     
     cols = st.columns(4)
     asset_list = [
@@ -219,7 +219,7 @@ with tab2:
             <p style="font-size: 15px; margin-bottom: 10px;"><b>Prediksi Sikap Bank Sentral:</b></p>
             <span class="{badge_class}">{fed_stance}</span>
             <p style="color: #9ca3af; font-size: 13px; margin-top: 15px;">
-            <b>Analisis Fundamental:</b> Berdasarkan Persamaan Fisher ($i \approx r + \pi + RP$)[span_17](start_span)[span_17](end_span) dan pernyataan pejabat bank sentral, jika imbal hasil obligasi melandai, fokus bergeser dari pengetatan inflasi ke penjagaan stabilitas pertumbuhan ekonomi (*Dovish Pivot*)[span_18](start_span)[span_18](end_span).
+            <b>Analisis Fundamental:</b> Berdasarkan Persamaan Fisher dan pernyataan pejabat bank sentral, jika imbal hasil obligasi melandai, fokus bergeser dari pengetatan inflasi ke penjagaan stabilitas pertumbuhan ekonomi.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -231,7 +231,7 @@ with tab2:
             <p style="font-size: 15px; margin-bottom: 10px;"><b>Rekomendasi Eksekusi:</b></p>
             <span class="{badge_class}">{gold_action}</span>
             <p style="color: #9ca3af; font-size: 13px; margin-top: 15px;">
-            <b>Logika Aksi:</b> Sikap Dovish menurunkan Imbal Hasil Riil (*Real Yields*) dan menekan DXY. Karena emas tidak memberikan kupon bunga, penurunan biaya peluang ini memicu lonjakan minat beli institusional secara masif[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span).
+            <b>Logika Aksi:</b> Sikap Dovish menurunkan Imbal Hasil Riil dan menekan DXY. Karena emas tidak memberikan kupon bunga, penurunan biaya peluang ini memicu lonjakan minat beli institusional secara masif.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -239,18 +239,18 @@ with tab2:
 # --- TAB 3: YIELD CURVE & LIQUIDITY MONITOR ---
 with tab3:
     st.markdown("### 📈 Yield Curve & Market Liquidity Monitor")
-    st.markdown("Analisis mendalam mengenai struktur suku bunga acuan dan dinamika likuiditas sistem keuangan global[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span).")
+    st.markdown("Analisis mendalam mengenai struktur suku bunga acuan dan dinamika likuiditas sistem keuangan global.")
     
     y1, y2 = st.columns(2)
     with y1:
         st.markdown(f"""
         <div class="card-box">
             <h4>📊 Struktur Suku Bunga (Fisher Equation)</h4>
-            <p style="font-size: 14px; color: #d1d5db;">Rumus: <b>$i \\approx r + \\pi + RP$</b>[span_23](start_span)[span_23](end_span)</p>
+            <p style="font-size: 14px; color: #d1d5db;">Formula: <b>i = r + pi + RP</b></p>
             <p style="font-size: 13px; color: #9ca3af;">
-            - <b>Suku Bunga Riil ($r$):</b> Mencerminkan pertumbuhan ekonomi riil.<br>
-            - <b>Ekspektasi Inflasi ($\\pi$):</b> Dipantau melalui data Core PCE.<br>
-            - <b>Premi Risiko ($RP$):</b> Premi ketidakpastian jangka panjang obligasi 10 Tahun (^TNX).
+            - <b>Suku Bunga Riil (r):</b> Mencerminkan pertumbuhan ekonomi riil.<br>
+            - <b>Ekspektasi Inflasi (pi):</b> Dipantau melalui data Core PCE.<br>
+            - <b>Premi Risiko (RP):</b> Premi ketidakpastian jangka panjang obligasi 10 Tahun (^TNX).
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -258,10 +258,10 @@ with tab3:
         st.markdown(f"""
         <div class="card-box">
             <h4>💧 Indikator Likuiditas Global</h4>
-            <p style="font-size: 14px; color: #d1d5db;">Formula Valuasi: <b>Asset Price = Intrinsic Value + Liquidity Premium ($AL$)</b>[span_24](start_span)[span_24](end_span)</p>
+            <p style="font-size: 14px; color: #d1d5db;">Formula Valuasi: <b>Asset Price = Intrinsic Value + Liquidity Premium (AL)</b></p>
             <p style="font-size: 13px; color: #9ca3af;">
-            - <b>Market Liquidity:</b> Kedalaman order book dan volume harian[span_25](start_span)[span_25](end_span).<br>
-            - <b>Funding Liquidity:</b> Kemudahan institusi memperoleh pinjaman likuiditas[span_26](start_span)[span_26](end_span). Saat likuiditas mengetat (*Liquidity Crunch*), premi likuiditas negatif memicu koreksi pasar[span_27](start_span)[span_27](end_span).
+            - <b>Market Liquidity:</b> Kedalaman order book dan volume harian.<br>
+            - <b>Funding Liquidity:</b> Kemudahan institusi memperoleh pinjaman likuiditas. Saat likuiditas mengetat, premi likuiditas negatif memicu koreksi pasar.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -269,7 +269,7 @@ with tab3:
 # --- TAB 4: CENTRAL BANK MANDATE & COT ---
 with tab4:
     st.markdown("### 🧠 Central Bank Dual Mandate & COT Sentiment Analysis")
-    st.markdown("Evaluasi mandat makroekonomi bank sentral serta pembacaan posisi pelaku pasar berjangka melalui laporan Commitments of Traders (COT)[span_28](start_span)[span_28](end_span)[span_29](start_span)[span_29](end_span).")
+    st.markdown("Evaluasi mandat makroekonomi bank sentral serta pembacaan posisi pelaku pasar berjangka melalui laporan Commitments of Traders (COT).")
     
     cb1, cb2 = st.columns(2)
     with cb1:
@@ -277,9 +277,9 @@ with tab4:
         <div class="card-box">
             <h4>🏛️ Dual Mandate The Fed & Kuantitas Uang</h4>
             <p style="font-size: 13px; color: #9ca3af;">
-            1. <b>Stabilitas Harga:</b> Target mutlak Core PCE 2.0%[span_30](start_span)[span_30](end_span).<br>
-            2. <b>Ketenagakerjaan Maksimal:</b> Dipantau via Nonfarm Payrolls & ECI[span_31](start_span)[span_31](end_span).<br>
-            3. <b>Persamaan Kuantitas ($M \\times V = P \\times Y$):</b> Pengendalian jumlah uang beredar ($M$) oleh bank sentral langsung memengaruhi tingkat harga ($P$)[span_32](start_span)[span_32](end_span).
+            1. <b>Stabilitas Harga:</b> Target mutlak Core PCE 2.0%.<br>
+            2. <b>Ketenagakerjaan Maksimal:</b> Dipantau via Nonfarm Payrolls & ECI.<br>
+            3. <b>Persamaan Kuantitas (M x V = P x Y):</b> Pengendalian jumlah uang beredar oleh bank sentral langsung memengaruhi tingkat harga.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -288,8 +288,8 @@ with tab4:
         <div class="card-box">
             <h4>👥 Analisis Sentimen Laporan COT</h4>
             <p style="font-size: 13px; color: #9ca3af;">
-            - <b>Non-Commercial (Large Speculators):</b> Hedge fund dan manajer investasi besar pengejar profit[span_33](start_span)[span_33](end_span). Posisi <i>Net Long</i> atau <i>Net Short</i> di level ekstrem menjadi sinyal pembalikan arah tren (*reversal*)[span_34](start_span)[span_34](end_span).<br>
-            - <b>Commercial (Hedgers):</b> Pelaku lindung nilai riil yang sering bergerak berlawanan dengan spekulan[span_35](start_span)[span_35](end_span).
+            - <b>Non-Commercial (Large Speculators):</b> Hedge fund dan manajer investasi besar pengejar profit. Posisi Net Long atau Net Short di level ekstrem menjadi sinyal pembalikan arah tren.<br>
+            - <b>Commercial (Hedgers):</b> Pelaku lindung nilai riil yang sering bergerak berlawanan dengan spekulan.
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -297,7 +297,7 @@ with tab4:
 # --- TAB 5: HISTORICAL BACKTESTING LAB ---
 with tab5:
     st.markdown("### 📉 Historical Backtesting Lab (2022 - 2026)")
-    st.markdown("Pengujian tingkat akurasi (*hit rate*) model kuantitatif terhadap keputusan FOMC di masa lalu.")
+    st.markdown("Pengujian tingkat akurasi model kuantitatif terhadap keputusan FOMC di masa lalu.")
     
     backtest_df = pd.DataFrame([
         {"FOMC Date": "2024-03-20", "Actual Decision": "Hold", "Model Prediction": "Hold", "Accuracy Status": "MATCH ✅"},
@@ -318,8 +318,8 @@ with tab6:
     st.markdown("""
     <div class="card-box">
         <h4 style="color: #ff8c00;">Rencana Aksi & Proyeksi Tren Emas Jangka Menengah (Macro Perspective)</h4>
-        <p><b>1. Konfluensi Makroekonomi & Siklus Bisnis:</b> Berada pada fase peralihan siklus di mana perlambatan ekonomi moderat memaksa bank sentral melonggarkan kebijakan, menurunkan Imbal Hasil Riil (*Real Yields*), dan melemahkan DXY[span_36](start_span)[span_36](end_span)[span_37](start_span)[span_37](end_span).</p>
-        <p><b>2. Peran Safe-Haven & Akumulasi Bank Sentral:</b> Permintaan cadangan emas oleh bank sentral global (*Central Bank Reserves Buying*) dan fungsi lindung nilai terhadap ketidakpastian geopolitik memberikan lantai harga (*price floor*) yang sangat kuat[span_38](start_span)[span_38](end_span).</p>
-        <p><b>3. Proyeksi Strategis & Psikologi Trading:</b> XAUUSD diproyeksikan berada dalam jalur <b>Bullish Berkelanjutan</b>. Menerapkan prinsip psikologi makro (*probabilistic thinking dan patience*), strategi terbaik adalah <i>Buy on Dip</i> dengan manajemen risiko dan ukuran posisi (*position sizing*) yang tahan terhadap volatilitas jangka pendek[span_39](start_span)[span_39](end_span).</p>
+        <p><b>1. Konfluensi Makroekonomi & Siklus Bisnis:</b> Berada pada fase peralihan siklus di mana perlambatan ekonomi moderat memaksa bank sentral melonggarkan kebijakan, menurunkan Imbal Hasil Riil, dan melemahkan DXY.</p>
+        <p><b>2. Peran Safe-Haven & Akumulasi Bank Sentral:</b> Permintaan cadangan emas oleh bank sentral global dan fungsi lindung nilai terhadap ketidakpastian geopolitik memberikan lantai harga yang sangat kuat.</p>
+        <p><b>3. Proyeksi Strategis & Psikologi Trading:</b> XAUUSD diproyeksikan berada dalam jalur <b>Bullish Berkelanjutan</b>. Menerapkan prinsip psikologi makro, strategi terbaik adalah <i>Buy on Dip</i> dengan manajemen risiko dan ukuran posisi yang tahan terhadap volatilitas jangka pendek.</p>
     </div>
     """, unsafe_allow_html=True)
