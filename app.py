@@ -265,7 +265,7 @@ with tab2:
         <div class="card-box">
             <h4 style="color: #f59e0b; margin-top:0;">📌 CPI RELEASE (PROGNOSIS UTAMA)</h4>
             <p>• <b>Waktu Rilis:</b> Setiap pertengahan bulan pukul <b>19:30 WIB</b>.</p>
-            <p>• <b>Fokus Data:</b> Komponen <i>Shelter</i> (Perumahan) FRED Index[span_0](start_span)[span_0](end_span).</p>
+            <p>• <b>Fokus Data:</b> Komponen <i>Shelter</i> (Perumahan) FRED Index.</p>
             <p>• <b>Prediksi Probabilitas Terkuat (83.5%):</b> <b>COOL (Melandai)</b></p>
             <hr style="border-color: #1f2937;">
             <p><b>Keputusan Aksi Mutlak:</b></p>
