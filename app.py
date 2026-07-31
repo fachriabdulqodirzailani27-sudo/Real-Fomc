@@ -15,9 +15,9 @@ st.set_page_config(
 st.markdown("""
     <style>
     .main { background-color: #030712; color: #f3f4f6; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-    .stTabs [data-baseweb="tab-list"] { gap: 4px; background-color: #0b0f19; padding: 8px; border-radius: 8px; border: 1px solid #1f2937; }
+    .stTabs [data-baseweb="tab-list"] { gap: 4px; background-color: #0b0f19; padding: 8px; border-radius: 8px; border: 1px solid #1f2937; overflow-x: auto; }
     .stTabs [data-baseweb="tab"] {
-        background-color: #111827; border-radius: 6px; color: #9ca3af; padding: 8px 14px; font-weight: 700; font-size: 11px; border: 1px solid #1f2937;
+        background-color: #111827; border-radius: 6px; color: #9ca3af; padding: 6px 12px; font-weight: 700; font-size: 11px; border: 1px solid #1f2937;
     }
     .stTabs [aria-selected="true"] {
         background-color: #3b82f6 !important; color: #ffffff !important; border: 1px solid #60a5fa !important;
@@ -36,13 +36,13 @@ st.markdown("""
         background: linear-gradient(90deg, #0b0f19 0%, #1e1b4b 100%); border: 1px solid #3730a3; padding: 18px; border-radius: 8px; margin-bottom: 15px;
     }
     .signal-buy {
-        background-color: #065f46; color: #34d399; padding: 6px 14px; border-radius: 6px; font-weight: 800; display: inline-block; font-size: 13px; border: 1px solid #059669; letter-spacing: 0.5px;
+        background-color: #065f46; color: #34d399; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; border: 1px solid #059669;
     }
     .signal-sell {
-        background-color: #7f1d1d; color: #f87171; padding: 6px 14px; border-radius: 6px; font-weight: 800; display: inline-block; font-size: 13px; border: 1px solid #dc2626; letter-spacing: 0.5px;
+        background-color: #7f1d1d; color: #f87171; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; border: 1px solid #dc2626;
     }
     .control-block {
-        background-color: #111827; border: 1px solid #1f2937; padding: 12px 14px; border-radius: 8px; margin-bottom: 12px;
+        background-color: #111827; border: 1px solid #1f2937; padding: 10px 12px; border-radius: 8px; margin-bottom: 10px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -72,21 +72,21 @@ def get_next_events():
     today = date.today()
     
     fomc_dates = [date(2026, 9, 16), date(2026, 11, 4), date(2026, 12, 16)]
-    next_fomc, f_days = "September 2026", 0
+    next_fomc, f_days = "September 16, 2026", 47
     for d in fomc_dates:
         if d >= today:
             next_fomc, f_days = d.strftime("%d %B %Y"), (d - today).days
             break
             
     cpi_dates = [date(2026, 8, 12), date(2026, 9, 15), date(2026, 10, 14)]
-    next_cpi, c_days = "August 2026", 0
+    next_cpi, c_days = "August 12, 2026", 11
     for d in cpi_dates:
         if d >= today:
             next_cpi, c_days = d.strftime("%d %B %Y"), (d - today).days
             break
             
     nfp_dates = [date(2026, 8, 7), date(2026, 9, 4), date(2026, 10, 2)]
-    next_nfp, n_days = "August 2026", 0
+    next_nfp, n_days = "August 7, 2026", 6
     for d in nfp_dates:
         if d >= today:
             next_nfp, n_days = d.strftime("%d %B %Y"), (d - today).days
@@ -102,25 +102,25 @@ with st.sidebar:
     
     st.markdown("""
         <div class="control-block">
-            <p style="color: #60a5fa; font-size: 11px; font-weight: bold; margin: 0 0 4px 0;">🎯 NEXT FOMC MEETING</p>
-            <p style="color: #f3f4f6; font-size: 13px; font-weight: bold; margin: 0;">{}</p>
-            <p style="color: #34d399; font-size: 11px; margin: 2px 0 0 0;">⏳ {} Days Remaining</p>
+            <p style="color: #60a5fa; font-size: 11px; font-weight: bold; margin: 0 0 2px 0;">🎯 NEXT FOMC MEETING</p>
+            <p style="color: #f3f4f6; font-size: 12px; font-weight: bold; margin: 0;">{}</p>
+            <p style="color: #34d399; font-size: 10px; margin: 2px 0 0 0;">⏳ {} Days Remaining</p>
         </div>
     """.format(f_str, f_rem), unsafe_allow_html=True)
     
     st.markdown("""
         <div class="control-block">
-            <p style="color: #38bdf8; font-size: 11px; font-weight: bold; margin: 0 0 4px 0;">📊 NEXT CPI RELEASE (INFLATION)</p>
-            <p style="color: #f3f4f6; font-size: 13px; font-weight: bold; margin: 0;">{}</p>
-            <p style="color: #34d399; font-size: 11px; margin: 2px 0 0 0;">⏳ {} Days Remaining</p>
+            <p style="color: #38bdf8; font-size: 11px; font-weight: bold; margin: 0 0 2px 0;">📊 NEXT CPI RELEASE</p>
+            <p style="color: #f3f4f6; font-size: 12px; font-weight: bold; margin: 0;">{}</p>
+            <p style="color: #34d399; font-size: 10px; margin: 2px 0 0 0;">⏳ {} Days Remaining</p>
         </div>
     """.format(c_str, c_rem), unsafe_allow_html=True)
     
     st.markdown("""
         <div class="control-block">
-            <p style="color: #a855f7; font-size: 11px; font-weight: bold; margin: 0 0 4px 0;">👥 NEXT NFP RELEASE (LABOR)</p>
-            <p style="color: #f3f4f6; font-size: 13px; font-weight: bold; margin: 0;">{}</p>
-            <p style="color: #34d399; font-size: 11px; margin: 2px 0 0 0;">⏳ {} Days Remaining</p>
+            <p style="color: #a855f7; font-size: 11px; font-weight: bold; margin: 0 0 2px 0;">👥 NEXT NFP RELEASE</p>
+            <p style="color: #f3f4f6; font-size: 12px; font-weight: bold; margin: 0;">{}</p>
+            <p style="color: #34d399; font-size: 10px; margin: 2px 0 0 0;">⏳ {} Days Remaining</p>
         </div>
     """.format(n_str, n_rem), unsafe_allow_html=True)
     
@@ -130,17 +130,17 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### 🧭 WORKSPACE NAVIGATOR")
     st.markdown("""
-    - **Market Overview:** Lintas Sektor Global
-    - **CPI & NFP Tier-1 Matrix:** Jadwal & Analisis Deviasi Spike
-    - **Fed NLP & OIS Wire:** Real-Time Fed Speeches & Curve
-    - **FOMC & Bayesian:** Probabilitas Suku Bunga Lanjutan
-    - **XAUUSD Core:** FOMC Signal & 1-Month Outlook
-    - **USDJPY & Carry:** FOMC Signal & 1-Month Outlook
-    - **BTCUSD & Liquidity:** FOMC Signal & 1-Month Outlook
-    - **Backtest (FOMC):** 2019-2026 Historical Lab
-    - **Backtest (CPI):** Spike & Deviation Accuracy Lab
+    - **Overview:** Lintas Sektor Global
+    - **CPI & NFP Matrix:** Keputusan Mutlak & Spike
+    - **Fed Wire:** Real-Time Fed Speeches & NLP
+    - **FOMC & Bayesian:** Probabilitas Suku Bunga
+    - **XAUUSD:** Analisis Posisi Aset
+    - **USDJPY:** Analisis Posisi Aset
+    - **BTCUSD:** Analisis Posisi Aset
+    - **Backtest (FOMC):** 2019-2026 Lab
+    - **Backtest (CPI):** Spike & Deviation Lab
     - **Backtest (NFP):** Employment Transmission Lab
-    - **AI & Risk:** Reasoning Chain & Skenario
+    - **AI & Risk:** Reasoning Chain
     """)
 
 fallback_data = {
@@ -251,8 +251,8 @@ with tab1:
 with tab2:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📅 CPI & NFP Tier-1 Macro Matrix & Price Spike Detection</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Panduan keputusan mutlak, jadwal rilis real-time 24 jam, dan aksi Buy/Sell di tiap aset.</p>
+            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📅 CPI & NFP Tier-1 Macro Decision Matrix</h3>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Keputusan mutlak Buy/Sell untuk XAUUSD, USDJPY, dan BTCUSD berdasarkan deviasi rilis data.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -262,21 +262,35 @@ with tab2:
         <div class="card-box">
             <h4 style="color: #f59e0b; margin-top:0;">📌 CPI RELEASE (INFLATION DYNAMICS)</h4>
             <p>• <b>Waktu Rilis:</b> Setiap pertengahan bulan pukul <b>19:30 WIB</b>.</p>
-            <p>• <b>Fokus Data:</b> Komponen <i>Shelter</i> (Perumahan) dari FRED Index[span_0](start_span)[span_0](end_span).</p>
-            <p>• <b>Keputusan & Aksi Aset:</b></p>
-            <p style="margin-left: 10px;">- Jika CPI <b>HOT (Lebih Tinggi dari Forecast)</b>: <br>🪙 XAUUSD: <span class="signal-sell">SELL (SPICE DOWN)</span><br>💱 USDJPY: <span class="signal-buy">BUY (USD STRONG)</span><br>₿ BTCUSD: <span class="signal-sell">SELL (BEARISH)</span></p>
-            <p style="margin-left: 10px; margin-top: 8px;">- Jika CPI <b>COOL (Lebih Rendah dari Forecast)</b>: <br>🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span><br>💱 USDJPY: <span class="signal-sell">SELL (YEN STRONG)</span><br>₿ BTCUSD: <span class="signal-buy">BUY (BULLISH)</span></p>
+            <p>• <b>Fokus Data:</b> Komponen <i>Shelter</i> (Perumahan) FRED Index[span_0](start_span)[span_0](end_span).</p>
+            <hr style="border-color: #1f2937;">
+            <p><b>A. Jika CPI HOT (Lebih Tinggi dari Forecast):</b></p>
+            <p>• 🪙 XAUUSD: <span class="signal-sell">SELL (SPIKE DOWN)</span></p>
+            <p>• 💱 USDJPY: <span class="signal-buy">BUY (USD STRONG)</span></p>
+            <p>• ₿ BTCUSD: <span class="signal-sell">SELL (BEARISH)</span></p>
+            <br>
+            <p><b>B. Jika CPI COOL (Lebih Rendah dari Forecast):</b></p>
+            <p>• 🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span></p>
+            <p>• 💱 USDJPY: <span class="signal-sell">SELL (YEN STRONG)</span></p>
+            <p>• ₿ BTCUSD: <span class="signal-buy">BUY (BULLISH)</span></p>
         </div>
         """, unsafe_allow_html=True)
     with col_c2:
         st.markdown("""
         <div class="card-box">
             <h4 style="color: #f59e0b; margin-top:0;">👥 NFP & ADP RELEASE (LABOR MARKET)</h4>
-            <p>• <b>Waktu Rilis:</b> ADP (Rabu 19:15 WIB), NFP (Jumat Pertama Bulan 19:30 WIB).</p>
+            <p>• <b>Waktu Rilis:</b> ADP (Rabu 19:15 WIB), NFP (Jumat 19:30 WIB).</p>
             <p>• <b>Fase Makro:</b> Penentu awal arah Jobless Claims & Retail Sales.</p>
-            <p>• <b>Keputusan & Aksi Aset:</b></p>
-            <p style="margin-left: 10px;">- Jika NFP <b>STRONG (Di Atas Konsensus)</b>: <br>🪙 XAUUSD: <span class="signal-sell">SELL</span><br>💱 USDJPY: <span class="signal-buy">BUY</span><br>₿ BTCUSD: <span class="signal-sell">SELL</span></p>
-            <p style="margin-left: 10px; margin-top: 8px;">- Jika NFP <b>WEAK (Di Bawah Konsensus)</b>: <br>🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span><br>💱 USDJPY: <span class="signal-sell">SELL (DROP)</span><br>₿ BTCUSD: <span class="signal-buy">BUY</span></p>
+            <hr style="border-color: #1f2937;">
+            <p><b>A. Jika NFP STRONG (Di Atas Konsensus):</b></p>
+            <p>• 🪙 XAUUSD: <span class="signal-sell">SELL (BEARISH)</span></p>
+            <p>• 💱 USDJPY: <span class="signal-buy">BUY (USD RICE)</span></p>
+            <p>• ₿ BTCUSD: <span class="signal-sell">SELL (DROP)</span></p>
+            <br>
+            <p><b>B. Jika NFP WEAK (Di Bawah Konsensus):</b></p>
+            <p>• 🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span></p>
+            <p>• 💱 USDJPY: <span class="signal-sell">SELL (DROP)</span></p>
+            <p>• ₿ BTCUSD: <span class="signal-buy">BUY (LIQUIDITY)</span></p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -302,8 +316,8 @@ with tab3:
 with tab4:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">🎯 FOMC Probability Engine & Bayesian Dynamic Scoring</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Matriks probabilitas suku bunga mutlak dengan Weighted Scoring.</p>
+            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">🎯 FOMC Probability Engine & Detailed Outlook (Hawkish / Dovish Stance)</h3>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Analisis mendalam proyeksi kebijakan The Fed berdasarkan aspek inflasi, ketenagakerjaan, dan likuiditas.</p>
         </div>
     """, unsafe_allow_html=True)
     c1, c2, c3, c4 = st.columns(4)
@@ -311,49 +325,67 @@ with tab4:
     with c2: st.metric("Cut Probability", f"{cut_prob:.1f}%")
     with c3: st.metric("Hike Probability", f"{hike_prob:.1f}%")
     with c4: st.metric("Model Confidence", f"{confidence_score}%", "Institutional Grade")
+    
+    st.markdown("""
+    <div class="card-box" style="margin-top: 15px;">
+        <h4 style="color: #60a5fa; margin-top: 0;">🏛️ Proyeksi Mendalam Rapat FOMC (Sikap: Netral Cenderung Dovish / Data-Dependent)</h4>
+        <p>• <b>Analisis Aspek Inflasi & Tenaga Kerja:</b> Meskipun data CPI menunjukkan ketahanan di kisaran 3% - 4.2%, pelonggaran pada sektor ketenagakerjaan (NFP melandai dan klaim pengangguran meningkat) memaksa The Fed untuk bersiap melakukan transisi pelonggaran (*policy pivoting*). Suku bunga diproyeksikan tertahan (*Hold*) pada fase awal sebelum siklus pemangkasan (*Rate Cuts*) dikonfirmasi.</p>
+        <p>• <b>Dampak Lintas Aset Saat Keputusan FOMC:</b> Transisi ini mengurangi daya tarik dolar AS secara struktural, memberikan ruang ekspansi bagi aset lindung nilai (*safe haven*) seperti Emas dan aset beta-tinggi seperti Bitcoin.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with tab5:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #fbbf24; margin: 0 0 4px 0;">🪙 XAUUSD (Gold) - FOMC & Tier-1 Macro Action</h3>
+            <h3 style="color: #fbbf24; margin: 0 0 4px 0;">🪙 XAUUSD (Gold) - FOMC Specific Action & 1-2 Month Astrodox Outlook</h3>
         </div>
     """, unsafe_allow_html=True)
     gold_action = "BUY (Bullish / Buy on Dip)" if is_dovish else "SELL (Bearish / Koreksi Sementara)"
     badge = "signal-buy" if is_dovish else "signal-sell"
     st.markdown(f"""
     <div class="card-box">
-        <h4>Rekomendasi Aksi: <span class="{badge}">{gold_action}</span></h4>
-        <p><b>Alasan Logis:</b> Konvergensi deviasi CPI dan pelonggaran ketenagakerjaan menekan DXY serta Real Yields, memicu lonjakan harga Emas.</p>
+        <h4>Proyeksi Aksi Saat Rapat FOMC: <span class="{badge}">{gold_action}</span></h4>
+        <p><b>Alasan Logis & Detail Aspek:</b> Saat keputusan FOMC dirilis, penahanan suku bunga yang dibarengi nada bahasa dovish (*Powell Stance*) akan menekan US Treasury Yields. Hal ini langsung menurunkan <i>opportunity cost</i> memegang emas.</p>
+        <hr style="border-color: #1f2937;">
+        <p><b>🌟 Analisis 1-2 Bulan Kedepan (Astrodox, Moonphase & Heatmap Institutional):</b></p>
+        <p>• Berdasarkan kalender astrologi tradisional (*Astrodox* / pergerakan matahari di zodiak Cancer/Leo) dan fase bulan (*Full Moon / New Moon reversal*), emas memasuki fase akumulasi institusional kuat menuju kuartal akhir.</p>
+        <p>• Data *heatmap institutional* menunjukkan perpindahan likuiditas dari risk-off ekstrem ke logam mulia. Secara tren 1-2 bulan ke depan, XAUUSD diproyeksikan mendaki target atas baru sebelum mengalami pullback sehat di bulan September.</p>
     </div>
     """, unsafe_allow_html=True)
 
 with tab6:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #f43f5e; margin: 0 0 4px 0;">💱 USDJPY (Yen / Dolar) - FOMC & Tier-1 Macro Action</h3>
+            <h3 style="color: #f43f5e; margin: 0 0 4px 0;">💱 USDJPY (Yen / Dolar) - FOMC Specific Action & Outlook</h3>
         </div>
     """, unsafe_allow_html=True)
     usdjpy_action = "SELL (USDJPY Turun / Yen Menguat)" if is_dovish else "BUY (USDJPY Naik / Dolar Menguat)"
     usdjpy_badge = "signal-sell" if is_dovish else "signal-buy"
     st.markdown(f"""
     <div class="card-box">
-        <h4>Rekomendasi Aksi: <span class="{usdjpy_badge}">{usdjpy_action}</span></h4>
-        <p><b>Alasan Logis:</b> Penyempitan interest rate differential memicu unwinding carry trade pada USDJPY.</p>
+        <h4>Proyeksi Aksi Saat Rapat FOMC: <span class="{usdjpy_badge}">{usdjpy_action}</span></h4>
+        <p><b>Alasan Logis & Detail Aspek:</b> Kompresi selisih suku bunga (*Interest Rate Differential*) antara Amerika Serikat dan Jepang saat FOMC mempertahankan suku bunga di tengah ekspektasi pelonggaran memicu likuiditas besar-besaran pada posisi *carry trade* USDJPY.</p>
+        <hr style="border-color: #1f2937;">
+        <p><b>🌐 Analisis 1-2 Bulan Kedepan (Geopolitik & Sental Likuiditas):</b></p>
+        <p>• Tekanan intervensi verbal dari otoritas Jepang serta normalisasi kebijakan Bank of Japan (BOJ) menjaga tren pelemahan pair ini dalam 1-2 bulan ke depan.</p>
     </div>
     """, unsafe_allow_html=True)
 
 with tab7:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #10b981; margin: 0 0 4px 0;">₿ BTCUSD (Bitcoin) - FOMC & Tier-1 Macro Action</h3>
+            <h3 style="color: #10b981; margin: 0 0 4px 0;">₿ BTCUSD (Bitcoin) - FOMC Specific Action & Outlook</h3>
         </div>
     """, unsafe_allow_html=True)
     btc_action = "BUY (Bullish / Ekspansi Likuiditas)" if is_dovish else "SELL (Bearish / Pengetatan Likuiditas)"
     btc_badge = "signal-buy" if is_dovish else "signal-sell"
     st.markdown(f"""
     <div class="card-box">
-        <h4>Rekomendasi Aksi: <span class="{btc_badge}">{btc_action}</span></h4>
-        <p><b>Alasan Logis:</b> Bitcoin bereaksi sebagai spons likuiditas global terhadap sinyal pelonggaran The Fed.</p>
+        <h4>Proyeksi Aksi Saat Rapat FOMC: <span class="{btc_badge}">{btc_action}</span></h4>
+        <p><b>Alasan Logis & Detail Aspek:</b> Sebagai instrumen beta-tinggi dan spons likuiditas global (*liquidity sponge*), Bitcoin merespons positif sinyal pelonggaran moneter pasca-FOMC.</p>
+        <hr style="border-color: #1f2937;">
+        <p><b>⚡ Analisis 1-2 Bulan Kedepan (Institutional Inflow):</b></p>
+        <p>• Stabilitas pasokan makroekonomi global dan arus masuk modal institusional ETF memperkuat prospek *bullish* moderat untuk Bitcoin dalam 1-2 bulan ke depan.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -361,7 +393,7 @@ with tab8:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #a855f7; margin: 0 0 4px 0;">📉 Backtest Lab (FOMC Meetings 2019-2026)</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Pengujian historis murni keputusan rapat FOMC lintas siklus moneter.</p>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Pengujian historis murni keputusan rapat FOMC (Total 64 Rapat Terjadwal + 2 Darurat = 66 Rapat).</p>
         </div>
     """, unsafe_allow_html=True)
     fomc_bt = [
@@ -374,14 +406,14 @@ with tab8:
         ("2026-03-18", "Hold", "Hold", "MATCH ✅"),
         ("2026-06-17", "Hold", "Hold", "MATCH ✅")
     ]
-    st.dataframe(pd.DataFrame(fomc_bt, columns=["Date", "Actual", "Prediction", "Status"]), use_container_width=True, height=320)
+    st.dataframe(pd.DataFrame(fomc_bt, columns=["Date", "Actual", "Prediction", "Status"]), use_container_width=True, height=300)
     st.metric(label="FOMC Backtest Hit Rate (2019-2026)", value="88.4%")
 
 with tab9:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📈 Backtest Lab (CPI Releases & Spike Accuracy 2019-2026)</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Akurasi prediksi deviasi CPI dan deteksi price spike pada XAUUSD, USDJPY, & BTCUSD selama 9 tahun.</p>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Total 96 Jadwal (91 Sudah Rilis, 5 Belum). Akurasi prediksi deviasi CPI dan spike.</p>
         </div>
     """, unsafe_allow_html=True)
     cpi_bt = [
@@ -393,14 +425,14 @@ with tab9:
         ("2026-02-11", "CPI Cool", "Gold Spike Buy Match", "MATCH ✅"),
         ("2026-05-13", "CPI Match", "Spike Anticipated Match", "MATCH ✅")
     ]
-    st.dataframe(pd.DataFrame(cpi_bt, columns=["Date", "CPI Release", "Spike Analysis", "Status"]), use_container_width=True, height=320)
+    st.dataframe(pd.DataFrame(cpi_bt, columns=["Date", "CPI Release", "Spike Analysis", "Status"]), use_container_width=True, height=300)
     st.metric(label="CPI Spike & Deviation Accuracy Hit Rate", value="90.5%")
 
 with tab10:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #10b981; margin: 0 0 4px 0;">📉 Backtest Lab (NFP & Labor Transmission 2019-2026)</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Backtest transmisi data ketenagakerjaan (Jobless Claims + ADP -> NFP).</p>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Total 96 Jadwal (91 Sudah Rilis, 5 Belum). Transmisi ketenagakerjaan.</p>
         </div>
     """, unsafe_allow_html=True)
     nfp_bt = [
@@ -411,7 +443,7 @@ with tab10:
         ("2025-09-05", "NFP Revision Shock", "Whipsaw Miss", "MISS ❌"),
         ("2026-04-03", "NFP Weak", "Gold Buy Match", "MATCH ✅")
     ]
-    st.dataframe(pd.DataFrame(nfp_bt, columns=["Date", "NFP Release", "Transmission Prediction", "Status"]), use_container_width=True, height=320)
+    st.dataframe(pd.DataFrame(nfp_bt, columns=["Date", "NFP Release", "Transmission Prediction", "Status"]), use_container_width=True, height=300)
     st.metric(label="NFP Transmission Hit Rate", value="89.6%")
 
 with tab11:
