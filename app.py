@@ -71,26 +71,6 @@ st.markdown(f"""
     .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: {border_style}; padding: 18px; border-radius: {border_radius}; margin-bottom: 15px; }}
     .signal-buy {{ background-color: #065f46; color: #34d399; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
     .signal-sell {{ background-color: #7f1d1d; color: #f87171; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
-    
-    /* SYMMETRIC PERFECT GRID FOR OVERVIEW CARDS */
-    .metric-grid {{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 15px;
-        margin-bottom: 20px;
-    }}
-    .metric-card {{
-        background-color: {card_bg};
-        border: {border_style};
-        padding: 18px;
-        border-radius: {border_radius};
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-    }}
     .calendar-card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); border-left: 4px solid {accent}; padding: 12px; border-radius: 6px; margin-bottom: 8px; }}
     </style>
 """, unsafe_allow_html=True)
@@ -263,24 +243,39 @@ with tab1:
         ("Crude Oil (WTI)", f"${data['Oil']['price']:.2f}", f"{data['Oil']['pct']:.2f}%", "🛢️ Komoditas")
     ]
     
-    grid_html = '<div class="metric-grid">'
-    for label, val, chg, cat in asset_list:
+    # Menggunakan Native st.columns untuk Simetri Sempurna Anti-Bug & Super Rapi
+    row1 = st.columns(4)
+    for i in range(4):
+        label, val, chg, cat = asset_list[i]
         chg_color = '#34d399' if '-' not in chg else '#f87171'
-        grid_html += f"""
-        <div class="metric-card">
-            <span style="color: #60a5fa; font-size: 9px; font-weight: bold; text-transform: uppercase;">{cat}</span>
-            <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center;">{label}</p>
-            <h3 style="color: #f3f4f6; margin: 0; font-size: 15px; font-weight: 800; text-align: center;">{val}</h3>
-            <p style="color: {chg_color}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold; text-align: center;">{chg}</p>
-        </div>
-        """
-    grid_html += '</div>'
-    st.markdown(grid_html, unsafe_allow_html=True)
+        with row1[i]:
+            st.markdown(f"""
+            <div style="background-color: {card_bg}; border: {border_style}; padding: 16px; border-radius: {border_radius}; text-align: center; margin-bottom: 10px;">
+                <span style="color: #60a5fa; font-size: 9px; font-weight: bold; text-transform: uppercase;">{cat}</span>
+                <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0;">{label}</p>
+                <h3 style="color: #f3f4f6; margin: 0; font-size: 15px; font-weight: 800;">{val}</h3>
+                <p style="color: {chg_color}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold;">{chg}</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+    row2 = st.columns(4)
+    for i in range(4, 8):
+        label, val, chg, cat = asset_list[i]
+        chg_color = '#34d399' if '-' not in chg else '#f87171'
+        with row2[i - 4]:
+            st.markdown(f"""
+            <div style="background-color: {card_bg}; border: {border_style}; padding: 16px; border-radius: {border_radius}; text-align: center; margin-bottom: 10px;">
+                <span style="color: #60a5fa; font-size: 9px; font-weight: bold; text-transform: uppercase;">{cat}</span>
+                <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0;">{label}</p>
+                <h3 style="color: #f3f4f6; margin: 0; font-size: 15px; font-weight: 800;">{val}</h3>
+                <p style="color: {chg_color}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold;">{chg}</p>
+            </div>
+            """, unsafe_allow_html=True)
             
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("### 📈 Visualisasi Grafik Pergerakan Indeks Global")
+    st.markdown("### 📈 Visualisasi Grafik Pergerakan Indeks Global Elite")
     chart_overview = pd.DataFrame({
-        "Gold Index": [2340, 2355, 2368, 2375, data['Gold']['price']],
+        "Gold Index ($)": [2340, 2355, 2368, 2375, data['Gold']['price']],
         "DXY Index": [104.8, 104.5, 104.3, 104.1, data['DXY']['price']]
     }, index=["H-4", "H-3", "H-2", "H-1", "Hari H"])
     st.line_chart(chart_overview)
@@ -323,7 +318,7 @@ with tab2:
         </div>
         """, unsafe_allow_html=True)
         
-    st.markdown("### 📊 Visualisasi Perbandingan Probabilitas Dampak Data")
+    st.markdown("### 📊 Visualisasi Perbandingan Probabilitas Dampak Data Elite")
     chart_matrix = pd.DataFrame({
         "Dampak CPI (%)": [88.2, 85.0, 82.5],
         "Dampak NFP (%)": [87.5, 84.0, 80.0]
