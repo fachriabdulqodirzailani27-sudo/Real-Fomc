@@ -1,8 +1,6 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import date, datetime
@@ -37,13 +35,13 @@ else:
 st.session_state.last_action_timestamp = current_epoch
 
 with st.sidebar:
-    st.markdown("### 🎨 TEMA TERMINAL")
+    st.markdown("### TEMA TERMINAL")
     theme_choice = st.selectbox("Pilih Estetika Visual", ["Bloomberg Midnight", "Matrix Emerald", "Cyberpunk Neon"])
     st.markdown("---")
-    st.markdown("### 📡 TELEGRAM PUSH ALERT")
+    st.markdown("### TELEGRAM PUSH ALERT")
     tg_token = st.text_input("Bot Token", type="password")
     tg_chat = st.text_input("Chat ID")
-    if st.button("🔔 Kirim Signal Alert Test"):
+    if st.button("Kirim Signal Alert Test"):
         if tg_token and tg_chat:
             st.success("Signal Alert Berhasil Disimulasikan ke Telegram!")
         else:
@@ -81,20 +79,20 @@ col_h1, col_h2 = st.columns([5, 1])
 with col_h1:
     st.markdown("""
         <div class="terminal-header" style="margin-bottom: 0px;">
-            <h1 style="color: #60a5fa; margin: 0; font-size: 24px; font-weight: 800;">🏛️ BBG // SUPER ELITE LEGEND QUANT TERMINAL MAX</h1>
-            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">MACRO REGIME SWITCHING • LIVE CORRELATION MATRIX • MAXIMUM HARDENED SECURITY</p>
+            <h1 style="color: #60a5fa; margin: 0; font-size: 24px; font-weight: 800;">BBG // SUPER ELITE LEGEND QUANT TERMINAL MAX</h1>
+            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">MACRO REGIME SWITCHING // NATIVE STREAMLIT CHARTS // MAXIMUM SECURITY</p>
         </div>
     """, unsafe_allow_html=True)
 with col_h2:
     st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("🔄 REFRESH TERMINAL", use_container_width=True):
+    if st.button("🔄 REFRESH", use_container_width=True):
         st.rerun()
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("""
     <div class="news-ticker">
-        🔴 <b>SYSTEM WIRE:</b> Security Level Max • Live Asset Correlation Active • Macro Regime: SOFT LANDING / REFLATION • WR 95.2% / 94.5% / 93.8%.
+        SYSTEM WIRE: Security Level Max // Native Charts Active // Macro Regime: SOFT LANDING / REFLATION // WR 95.2% / 94.5% / 93.8%.
     </div>
 """, unsafe_allow_html=True)
 
@@ -127,12 +125,12 @@ def get_next_events():
 
 with st.sidebar:
     st.markdown("---")
-    st.markdown("### 🎛️ KALENDER ACARA MAKRO")
-    st.markdown(f"• **FOMC Meeting:** {f_str} ({f_rem} Hari)")
-    st.markdown(f"• **CPI Release:** {c_str} ({c_rem} Hari)")
-    st.markdown(f"• **NFP Release:** {n_str} ({n_rem} Hari)")
+    st.markdown("### KALENDER ACARA MAKRO")
+    st.markdown(f"• FOMC Meeting: {f_str} ({f_rem} Hari)")
+    st.markdown(f"• CPI Release: {c_str} ({c_rem} Hari)")
+    st.markdown(f"• NFP Release: {n_str} ({n_rem} Hari)")
     st.markdown("---")
-    st.success("🟢 Keamanan Level Max (Anti-Bot & Rate-Limit) Aktif")
+    st.success("Keamanan Level Max Aktif")
 
 fallback_data = {
     'TNX': {'price': 4.35, 'pct': -0.45},
@@ -211,16 +209,16 @@ confidence_score = round(min(99.5, max(88.0, 96.8 - abs(data['VIX']['price'] - 1
 is_dovish = rate_press < 0 or data['TNX']['pct'] < 0 or nlp_bias > 0
 
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs([
-    "📊 OVERVIEW & HEATMAP", "📅 CPI & NFP MATRIX", "📡 FED WIRE", 
+    "📊 OVERVIEW", "📅 CPI & NFP MATRIX", "📡 FED WIRE", 
     "🎯 FOMC & BAYESIAN", "🪙 XAUUSD", "💱 USDJPY", 
-    "₿ BTCUSD", "📉 BACKTEST FOMC", "📈 BACKTEST CPI", "📉 BACKTEST NFP", "🤖 AI & REZIM MAKRO"
+    "₿ BTCUSD", "📉 BACKTEST FOMC", "📈 BACKTEST CPI", "📉 BACKTEST NFP", "🤖 AI & REZIM"
 ])
 
 with tab1:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #60a5fa; margin: 0 0 4px 0;">🌐 Cross-Asset Real-Time Feed & Live Correlation Matrix</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Pemantauan instrumen makro utama dengan analisis korelasi interaktif.</p>
+            <h3 style="color: #60a5fa; margin: 0 0 4px 0;">🌐 Cross-Asset Real-Time Feed</h3>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Pemantauan instrumen makro utama secara real-time.</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -243,27 +241,13 @@ with tab1:
             """, unsafe_allow_html=True)
             
     st.markdown("<br>", unsafe_allow_html=True)
-    
-    col_g1, col_g2 = st.columns(2)
-    with col_g1:
-        chart_df = pd.DataFrame({
-            "Hari": ["H-4", "H-3", "H-2", "H-1", "Hari H"],
-            "XAUUSD": [2340, 2355, 2368, 2375, data['Gold']['price']],
-            "DXY Index": [104.8, 104.5, 104.3, 104.1, data['DXY']['price']]
-        })
-        fig_line = px.line(chart_df, x="Hari", y=["XAUUSD", "DXY Index"], title="📈 Visualisasi Tren Harga Real-Time", template="plotly_dark")
-        st.plotly_chart(fig_line, use_container_width=True)
-        
-    with col_g2:
-        corr_matrix = pd.DataFrame([
-            [1.00, -0.88, -0.75, 0.62],
-            [-0.88, 1.00, 0.82, -0.54],
-            [-0.75, 0.82, 1.00, -0.41],
-            [0.62, -0.54, -0.41, 1.00]
-        ], columns=["XAUUSD", "DXY", "TNX", "BTC"], index=["XAUUSD", "DXY", "TNX", "BTC"])
-        
-        fig_heat = px.imshow(corr_matrix, text_auto=True, title="🔥 Matriks Korelasi Lintas Aset Makro", color_continuous_scale="Viridis", template="plotly_dark")
-        st.plotly_chart(fig_heat, use_container_width=True)
+    chart_df = pd.DataFrame({
+        "Hari": ["H-4", "H-3", "H-2", "H-1", "Hari H"],
+        "XAUUSD": [2340, 2355, 2368, 2375, data['Gold']['price']],
+        "DXY_Index": [104.8, 104.5, 104.3, 104.1, data['DXY']['price']]
+    }).set_index("Hari")
+    st.markdown("### 📈 Visualisasi Tren Harga Lintas Sektor")
+    st.line_chart(chart_df)
 
 with tab2:
     st.markdown("""
@@ -294,7 +278,7 @@ with tab2:
         """, unsafe_allow_html=True)
 
 with tab3:
-    st.markdown("### 📡 Federal Reserve Real-Time Wire & NLP Fed-Speak Parser")
+    st.markdown("### 📡 Federal Reserve Real-Time Wire & NLP Parser")
     st.dataframe(fed_wire_df, use_container_width=True, height=300)
 
 with tab4:
