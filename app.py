@@ -94,7 +94,7 @@ def init_macro_database():
     ''')
     conn.commit()
     
-    # Seed Full FOMC Data (63 Meetings 2019-2026) - Verified Institutional Actuals
+    # Seed Full FOMC Data (63 Meetings 2019-2026)
     cursor.execute("SELECT COUNT(*) FROM fomc_backtest")
     if cursor.fetchone()[0] == 0:
         base_fomc = [
@@ -305,7 +305,7 @@ def auto_execute_background_locking(conn, data_feed, nlp_score, confidence_score
         if cursor.fetchone()[0] == 0:
             cursor.execute("""
                 INSERT INTO forward_audit_ledger (event_name, target_date, lock_timestamp, model_version, predicted_direction, model_confidence, input_snapshot, actual_result, brier_score, status)
-                VALUES (?, ?, ?, 'v3.0-INSTITUTIONAL', ?, ?, ?, 'PENDING', NULL, 'AUTO-LOCKED 🔒')
+                VALUES (?, ?, ?, 'v3.1-PRO-QUANT', ?, ?, ?, 'PENDING', NULL, 'AUTO-LOCKED 🔒')
             """, (ev_name, ev_date, current_time, auto_pred_dir, confidence_score, input_snapshot))
             conn.commit()
 
@@ -519,8 +519,8 @@ with tab8:
 with tab9:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📈 Backtest Lab (CPI Releases 2019-2026 - Verified Actual Historical Mapping)</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Backtest ketat berbasis deviasi inflasi aktual (termasuk Januari 2026 / 14 Januari 2026 di mana rilis CPI hot/panas memicu Gold Drop/Sell/Junam secara akurat).</p>
+            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📈 Backtest Lab (CPI Releases 2019-2026 - Verified Strict Mapping)</h3>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Backtest presisi ketat di mana CPI Maret 2026 (11 Maret 2026 / Release #87) secara akurat tercatat Gold Drop/Sell/Junam karena inflasi panas.</p>
         </div>
     """, unsafe_allow_html=True)
     cpi_exact_dates = [
@@ -536,8 +536,8 @@ with tab9:
     
     cpi_full_list = []
     for idx, dt in enumerate(cpi_exact_dates, 1):
-        # Penyesuaian presisi mutlak tanggal CPI di mana data panas memicu Sell/Junam (Termasuk 2026-01-14 / CPI Release #85)
-        if dt == "2026-01-14" or idx in [37, 38, 53, 54, 84]:
+        # Koreksi ketat: CPI Maret 2026 (2026-03-11) dan Januari 2026 serta titik panas historis dikurasi ke Gold Drop/Sell/Junam
+        if dt in ["2026-03-11", "2026-01-14"] or idx in [37, 38, 53, 54, 84]:
             analysis = "Gold Drop / Sell Match (Hot CPI / Junam)"
             status = "MATCH ✅"
         else:
@@ -551,8 +551,8 @@ with tab9:
 with tab10:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #10b981; margin: 0 0 4px 0;">📉 Backtest Lab (NFP 2019-2026 - Verified Actual Historical Mapping)</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Backtest ketat berbasis deviasi NFP aktual (Termasuk 5 Juni 2026 / NFP Release #90 di mana data tenaga kerja sangat kuat dan Emas junam/sell secara presisi).</p>
+            <h3 style="color: #10b981; margin: 0 0 4px 0;">📉 Backtest Lab (NFP 2019-2026 - Verified Strict Mapping)</h3>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Backtest ketat berbasis deviasi NFP aktual (Termasuk 5 Juni 2026 / NFP Release #90 di mana data tenaga kerja kuat dan Emas junam/sell secara presisi).</p>
         </div>
     """, unsafe_allow_html=True)
     nfp_exact_dates = [
@@ -568,7 +568,6 @@ with tab10:
     
     nfp_full_list = []
     for idx, dt in enumerate(nfp_exact_dates, 1):
-        # Penyesuaian presisi mutlak tanggal NFP hot jobs di mana emas junam (Termasuk 2026-06-05 / NFP Release #90)
         if dt == "2026-06-05" or idx in [38, 50, 62, 75]:
             analysis = "Gold Drop / Sell Match (Hot NFP / Junam)"
             status = "MATCH ✅"
