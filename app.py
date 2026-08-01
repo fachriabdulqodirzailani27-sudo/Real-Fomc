@@ -38,15 +38,7 @@ with st.sidebar:
     st.markdown("### 🎨 ESTETIKA TEMA & BENTUK")
     theme_choice = st.selectbox("Pilih Tema Visual", ["Bloomberg Midnight", "Matrix Emerald", "Cyberpunk Neon"])
     st.markdown("---")
-    st.markdown("### 📡 TELEGRAM PUSH ALERT")
-    st.markdown("<p style='font-size: 11px; color: #94a3b8;'>Fungsi: Kirim sinyal otomatis ke HP.<br>1. Cari <b>@BotFather</b> di Telegram, buat bot baru & ambil <b>Bot Token</b>.<br>2. Cari <b>@userinfobot</b> untuk ambil <b>Chat ID</b> Anda.</p>", unsafe_allow_html=True)
-    tg_token = st.text_input("Bot Token", type="password")
-    tg_chat = st.text_input("Chat ID")
-    if st.button("🔔 Kirim Signal Alert Test"):
-        if tg_token and tg_chat:
-            st.success("Signal Alert Berhasil Disimulasikan ke Telegram!")
-        else:
-            st.warning("Masukkan Token dan Chat ID terlebih dahulu.")
+    st.markdown("### ⏳ TERMINAL CALENDAR")
 
 if theme_choice == "Matrix Emerald":
     bg_main = "#022c22"
@@ -79,7 +71,26 @@ st.markdown(f"""
     .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: {border_style}; padding: 18px; border-radius: {border_radius}; margin-bottom: 15px; }}
     .signal-buy {{ background-color: #065f46; color: #34d399; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
     .signal-sell {{ background-color: #7f1d1d; color: #f87171; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
-    .metric-card {{ background-color: {card_bg}; border: {border_style}; padding: 16px; border-radius: {border_radius}; text-align: center; height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }}
+    
+    /* SYMMETRIC PERFECT GRID FOR OVERVIEW CARDS */
+    .metric-grid {{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }}
+    .metric-card {{
+        background-color: {card_bg};
+        border: {border_style};
+        padding: 18px;
+        border-radius: {border_radius};
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }}
     .calendar-card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); border-left: 4px solid {accent}; padding: 12px; border-radius: 6px; margin-bottom: 8px; }}
     </style>
 """, unsafe_allow_html=True)
@@ -133,7 +144,6 @@ def get_next_events():
 (f_str, f_rem), (c_str, c_rem), (n_str, n_rem) = get_next_events()
 
 with st.sidebar:
-    st.markdown("### ⏳ TERMINAL CALENDAR")
     st.markdown(f"""
         <div class="calendar-card">
             <span style="color: #60a5fa; font-size: 11px; font-weight: bold;">🎯 NEXT FOMC MEETING</span><br>
@@ -241,7 +251,7 @@ with tab1:
             <p style="color: #94a3b8; margin: 0; font-size: 12px;">Pemantauan instrumen makro utama secara real-time dengan failover otomatis.</p>
         </div>
     """, unsafe_allow_html=True)
-    cols = st.columns(4)
+    
     asset_list = [
         ("10Y Treasury Yield (^TNX)", f"{data['TNX']['price']:.3f}%", f"{data['TNX']['pct']:.2f}%", "📈 Obligasi"),
         ("US Dollar Index (DXY)", f"{data['DXY']['price']:.2f}", f"{data['DXY']['pct']:.2f}%", "💵 Mata Uang"),
@@ -252,16 +262,20 @@ with tab1:
         ("S&P 500 (Growth)", f"${data['SPX']['price']:.2f}", f"{data['SPX']['pct']:.2f}%", "📊 Ekuitas AS"),
         ("Crude Oil (WTI)", f"${data['Oil']['price']:.2f}", f"{data['Oil']['pct']:.2f}%", "🛢️ Komoditas")
     ]
-    for i, (label, val, chg, cat) in enumerate(asset_list):
-        with cols[i % 4]:
-            st.markdown(f"""
-            <div class="metric-card">
-                <span style="color: #60a5fa; font-size: 9px; font-weight: bold; text-transform: uppercase;">{cat}</span>
-                <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center;">{label}</p>
-                <h3 style="color: #f3f4f6; margin: 0; font-size: 15px; font-weight: 800; text-align: center;">{val}</h3>
-                <p style="color: {'#34d399' if '-' not in chg else '#f87171'}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold; text-align: center;">{chg}</p>
-            </div>
-            """, unsafe_allow_html=True)
+    
+    grid_html = '<div class="metric-grid">'
+    for label, val, chg, cat in asset_list:
+        chg_color = '#34d399' if '-' not in chg else '#f87171'
+        grid_html += f"""
+        <div class="metric-card">
+            <span style="color: #60a5fa; font-size: 9px; font-weight: bold; text-transform: uppercase;">{cat}</span>
+            <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center;">{label}</p>
+            <h3 style="color: #f3f4f6; margin: 0; font-size: 15px; font-weight: 800; text-align: center;">{val}</h3>
+            <p style="color: {chg_color}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold; text-align: center;">{chg}</p>
+        </div>
+        """
+    grid_html += '</div>'
+    st.markdown(grid_html, unsafe_allow_html=True)
             
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("### 📈 Visualisasi Grafik Pergerakan Indeks Global")
