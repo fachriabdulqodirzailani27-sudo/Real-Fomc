@@ -161,7 +161,7 @@ with col_h1:
     st.markdown("""
         <div class="terminal-header" style="margin-bottom: 0px;">
             <h1 style="color: #60a5fa; margin: 0; font-size: 24px; font-weight: 800;">BBG // MACRO DECISION ENGINE (PRO QUANT EDITION)</h1>
-            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">MULTI-FACTOR MACRO PROBABILITY ENGINE • FULLY AUTOMATED AUDIT LEDGER</p>
+            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">MULTI-FACTOR MACRO PROBABILITY ENGINE • LIVE FORWARD TRACKER</p>
         </div>
     """, unsafe_allow_html=True)
 with col_h2:
@@ -284,7 +284,6 @@ def auto_execute_background_locking(conn, data_feed, nlp_score, confidence_score
     ]
     
     for ev_name, ev_date in upcoming_schedule:
-        # Check if an automated baseline entry exists for this event
         cursor.execute("SELECT COUNT(*) FROM forward_audit_ledger WHERE event_name = ? AND target_date = ?", (ev_name, ev_date))
         if cursor.fetchone()[0] == 0:
             cursor.execute("""
@@ -608,23 +607,43 @@ with tab11:
 with tab12:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">🧪 Fully Automated Forward Audit Ledger (Append-Only)</h3>
-            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Sistem otonom yang langsung mengunci prediksi makro secara otomatis tanpa intervensi manual.</p>
+            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">🧪 Fully Automated Live Forward Tracker & Metrics</h3>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Pencatatan prediksi masa depan secara otonom lengkap dengan kalkulasi Win Rate otomatis.</p>
         </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("### 📋 Daftar Audit Prediksi Berjalan (Fully Automated Trail)")
+    # Hitung Statistik Live Forward Test Otomatis dari Database
+    cursor_fwd = conn.cursor()
+    cursor_fwd.execute("SELECT COUNT(*) FROM forward_audit_ledger")
+    total_fwd_events = cursor_fwd.fetchone()[0]
+    
+    cursor_fwd.execute("SELECT COUNT(*) FROM forward_audit_ledger WHERE actual_result != 'PENDING'")
+    evaluated_fwd = cursor_fwd.fetchone()[0]
+    
+    cursor_fwd.execute("SELECT COUNT(*) FROM forward_audit_ledger WHERE actual_result LIKE '%MATCH%'")
+    matched_fwd = cursor_fwd.fetchone()[0]
+    
+    live_win_rate = round((matched_fwd / evaluated_fwd) * 100, 1) if evaluated_fwd > 0 else 0.0
+    
+    # Tampilkan Metrik Live Dashboard
+    m1, m2, m3, m4 = st.columns(4)
+    with m1: st.metric("Total Locked Events", total_fwd_events)
+    with m2: st.metric("Evaluated Events", evaluated_fwd)
+    with m3: st.metric("Correct Matches", matched_fwd)
+    with m4: st.metric("Live Forward Win Rate", f"{live_win_rate}%")
+
+    st.markdown("### 📋 Daftar Live Forward Tracker & Audit Trail")
     try:
-        df_audit = pd.read_sql("SELECT event_name AS 'Event', target_date AS 'Target Date', lock_timestamp AS 'Locked At', model_version AS 'Version', predicted_direction AS 'Prediction', model_confidence AS 'Confidence', input_snapshot AS 'Market Snapshot', actual_result AS 'Actual', status AS 'Status' FROM forward_audit_ledger", conn)
+        df_audit = pd.read_sql("SELECT event_name AS 'Event', target_date AS 'Target Date', lock_timestamp AS 'Locked At', model_version AS 'Version', predicted_direction AS 'Prediction', model_confidence AS 'Confidence', input_snapshot AS 'Market Snapshot', actual_result AS 'Actual Result', status AS 'Status' FROM forward_audit_ledger", conn)
         st.dataframe(df_audit, use_container_width=True)
     except:
-        st.info("Memuat data audit otomatis...")
+        st.info("Memuat data live tracker...")
         
     st.markdown("""
     <div class="card-box">
-        <h4 style="color: #f59e0b; margin-top:0;">🛡️ Status Otomatisasi Penuh:</h4>
-        <p>1. <b>Zero Click Required:</b> Setiap event mendatang (FOMC, CPI, NFP) otomatis terpindai dan terkunci ke dalam database begitu aplikasi diakses.</p>
-        <p>2. <b>Immutable Audit Trail:</b> Mencegah manipulasi data dan menjamin transparansi riset kuantitatif secara utuh.</p>
+        <h4 style="color: #f59e0b; margin-top:0;">🛡️ Keterangan Status Evaluasi:</h4>
+        <p>1. <b>AUTO-LOCKED:</b> Sistem memindai dan mengunci prediksi otonom sebelum rilis berita.</p>
+        <p>2. <b>PENDING / MATCH / MISS:</b> Status evaluasi yang diperbarui setelah rilis data aktual untuk menghitung Win Rate secara objektif.</p>
     </div>
     """, unsafe_allow_html=True)
 
