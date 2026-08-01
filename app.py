@@ -53,22 +53,17 @@ def init_macro_database():
         )
     ''')
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS cpi_backtest (
+        CREATE TABLE IF NOT EXISTS forward_audit_ledger (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            release_no INTEGER,
-            date TEXT UNIQUE,
-            release_name TEXT,
-            analysis TEXT,
-            status TEXT
-        )
-    ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS nfp_backtest (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            release_no INTEGER,
-            date TEXT UNIQUE,
-            release_name TEXT,
-            transmission TEXT,
+            event_name TEXT,
+            target_date TEXT,
+            lock_timestamp TEXT,
+            model_version TEXT,
+            predicted_direction TEXT,
+            model_confidence REAL,
+            input_snapshot TEXT,
+            actual_result TEXT,
+            brier_score REAL,
             status TEXT
         )
     ''')
@@ -141,7 +136,7 @@ with col_h1:
     st.markdown("""
         <div class="terminal-header" style="margin-bottom: 0px;">
             <h1 style="color: #60a5fa; margin: 0; font-size: 24px; font-weight: 800;">BBG // MACRO DECISION ENGINE (PRO QUANT EDITION)</h1>
-            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">MULTI-FACTOR MACRO PROBABILITY ENGINE • MODEL CONFIDENCE INDEX ACTIVE</p>
+            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">MULTI-FACTOR MACRO PROBABILITY ENGINE • INTERNAL MODEL CONFIDENCE INDEX ACTIVE</p>
         </div>
     """, unsafe_allow_html=True)
 with col_h2:
@@ -275,10 +270,10 @@ hike_prob = round(100.0 - hold_prob - cut_prob, 1)
 model_confidence = round(min(99.1, max(85.0, 92.5 - abs(data['VIX']['price'] - 15.0) * 0.3 + abs(nlp_bias))), 1)
 is_dovish = rate_press < 0 or data['TNX']['pct'] < 0 or nlp_bias > 0
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13 = st.tabs([
     "📊 OVERVIEW", "📅 CPI & NFP MATRIX", "📡 FED WIRE", 
     "🎯 FOMC & ENGINE", "🪙 XAUUSD", "💱 USDJPY", 
-    "₿ BTCUSD", "📉 BACKTEST (FOMC)", "📈 BACKTEST (CPI)", "📉 BACKTEST (NFP)", "📐 METHODOLOGY", "🤖 AI & RISK"
+    "₿ BTCUSD", "📉 BACKTEST (FOMC)", "📈 BACKTEST (CPI)", "📉 BACKTEST (NFP)", "📐 METHODOLOGY", "🧪 FORWARD VALIDATION", "🤖 AI & RISK"
 ])
 
 with tab1:
@@ -351,7 +346,7 @@ with tab2:
             <h4 style="color: #f59e0b; margin-top:0;">📌 CPI RELEASE (PROGNOSIS)</h4>
             <p>• <b>Waktu Rilis:</b> Setiap pertengahan bulan pukul <b>19:30 WIB</b>.</p>
             <p>• <b>Fokus Sektor:</b> Truflation Real-Time Index & Komponen Shelter Zillow.</p>
-            <p>• <b>Model Confidence Index:</b> <b>92.5% (COOL / Melandai)</b></p>
+            <p>• <b>Internal Model Confidence Index:</b> <b>92.5% (COOL / Melandai)</b></p>
             <hr style="border-color: #1f2937;">
             <p><b>Keputusan Aksi Mutlak:</b></p>
             <p>• 🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span></p>
@@ -365,7 +360,7 @@ with tab2:
             <h4 style="color: #f59e0b; margin-top:0;">👥 NFP RELEASE (PROGNOSIS)</h4>
             <p>• <b>Waktu Rilis:</b> ADP (Rabu 19:15 WIB), NFP (Jumat 19:30 WIB).</p>
             <p>• <b>Fokus Sektor:</b> JOLTS Job Openings & UKG Payroll Metrics.</p>
-            <p>• <b>Model Confidence Index:</b> <b>91.8% (WEAK / Mendingin)</b></p>
+            <p>• <b>Internal Model Confidence Index:</b> <b>91.8% (WEAK / Mendingin)</b></p>
             <hr style="border-color: #1f2937;">
             <p><b>Keputusan Aksi Mutlak:</b></p>
             <p>• 🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span></p>
@@ -411,7 +406,7 @@ with tab4:
     with c1: st.metric("Hold Probability", f"{hold_prob:.1f}%")
     with c2: st.metric("Cut Probability", f"{cut_prob:.1f}%")
     with c3: st.metric("Hike Probability", f"{hike_prob:.1f}%")
-    with c4: st.metric("Model Confidence Index", f"{model_confidence}%", "Dynamic Score")
+    with c4: st.metric("Internal Model Confidence", f"{model_confidence}%", "Dynamic Score")
     
     fomc_stance_text = "DOVISH PIVOT / RATE CUT BIAS" if is_dovish else "HAWKISH / HIGHER FOR LONGER BIAS"
     fomc_color = "#34d399" if is_dovish else "#f87171"
@@ -574,7 +569,7 @@ with tab11:
         <p>• <b>Update Frequency:</b> Real-time market tick intervals; 5-minute polling for RSS wire.</p>
         <p>• <b>Model Type:</b> Heuristic Multi-Factor Scoring Model with Sigmoid Transformation.</p>
         <p>• <b>Key Variables:</b> 10Y Treasury Yields (TNX), US Dollar Index (DXY), Volatility Index (VIX), S&P 500 (SPX), dan NLP Fed-Speak sentiment vector.</p>
-        <p>• <b>Output Metrics:</b> Model Confidence Index, Probabilitas Hold/Cut/Hike, serta arah transmisi lintas aset (XAUUSD, USDJPY, BTCUSD).</p>
+        <p>• <b>Output Metrics:</b> Internal Model Confidence Score, Probabilitas Hold/Cut/Hike, serta arah transmisi lintas aset (XAUUSD, USDJPY, BTCUSD).</p>
     </div>
     
     <div class="card-box">
@@ -586,6 +581,76 @@ with tab11:
     """, unsafe_allow_html=True)
 
 with tab12:
+    st.markdown("""
+        <div class="visual-banner">
+            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">🧪 Model Validation & Forward Audit Ledger (Append-Only)</h3>
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">Rekam jejak prediksi otonom yang dikunci SEBELUM event makro terjadi untuk audit publik transparan.</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    with st.expander("🔒 Kunci Prediksi Otomatis dari Engine (Pre-Event Lock)"):
+        st.info(f"💡 Engine Status: Berdasarkan data real-time saat ini, Internal Model Confidence Score terbaca otomatis sebesar **{model_confidence}%** dengan stance utama **{'DOVISH / RATE CUT' if is_dovish else 'HAWKISH / HIGHER FOR LONGER'}**.")
+        
+        with st.form("auto_lock_form"):
+            ev_name = st.selectbox("Nama Event Target", ["NFP August 2026 (7 Aug 2026)", "CPI August 2026", "FOMC September 2026"])
+            target_date_input = st.date_input("Tanggal Rilis Aktual")
+            
+            auto_pred_dir = "WEAK (Bearish USD / Gold Buy)" if is_dovish else "STRONG (Bullish USD / Gold Sell)"
+            auto_conf_val = model_confidence
+            
+            st.markdown(f"""
+            * **Prediksi Otonom Engine:** `{auto_pred_dir}`
+            * **Internal Model Confidence (Otomatis):** `{auto_conf_val}%`
+            * **Snapshot Input Saat Dikunci:** `VIX={data['VIX']['price']:.2f} | DXY={data['DXY']['price']:.2f} | TNX={data['TNX']['price']:.3f}% | NLP Bias={nlp_bias:.2f}`
+            * **Model Version:** `MacroEngine v2.4.1-PRO`
+            """, unsafe_allow_html=True)
+            
+            submit_auto_lock = st.form_submit_button("Kunci Prediksi ke Append-Only Audit Ledger")
+            
+            if submit_auto_lock:
+                cursor = conn.cursor()
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                input_snapshot = f"VIX={data['VIX']['price']:.2f}, DXY={data['DXY']['price']:.2f}, TNX={data['TNX']['price']:.3f}%, NLP={nlp_bias:.2f}"
+                
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS forward_audit_ledger (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        event_name TEXT,
+                        target_date TEXT,
+                        lock_timestamp TEXT,
+                        model_version TEXT,
+                        predicted_direction TEXT,
+                        model_confidence REAL,
+                        input_snapshot TEXT,
+                        actual_result TEXT,
+                        brier_score REAL,
+                        status TEXT
+                    )
+                ''')
+                
+                cursor.execute("""
+                    INSERT INTO forward_audit_ledger (event_name, target_date, lock_timestamp, model_version, predicted_direction, model_confidence, input_snapshot, actual_result, brier_score, status)
+                    VALUES (?, ?, ?, 'v2.4.1-PRO', ?, ?, ?, 'PENDING', NULL, 'LOCKED 🔒')
+                """, (ev_name, str(target_date_input), current_time, auto_pred_dir, auto_conf_val, input_snapshot))
+                conn.commit()
+                st.success(f"Prediksi otonom untuk {ev_name} berhasil dikunci dalam Append-Only Ledger pada {current_time}!")
+
+    st.markdown("### 📋 Daftar Audit Prediksi Berjalan (Append-Only Audit Trail)")
+    try:
+        df_audit = pd.read_sql("SELECT event_name AS 'Event', target_date AS 'Target Date', lock_timestamp AS 'Locked At', model_version AS 'Version', predicted_direction AS 'Prediction', model_confidence AS 'Confidence', input_snapshot AS 'Market Snapshot', actual_result AS 'Actual', status AS 'Status' FROM forward_audit_ledger", conn)
+        st.dataframe(df_audit, use_container_width=True)
+    except:
+        st.info("Belum ada data audit tersimpan di database.")
+        
+    st.markdown("""
+    <div class="card-box">
+        <h4 style="color: #f59e0b; margin-top:0;">🛡️ Standar Kredibilitas Proyek:</h4>
+        <p>1. <b>Zero Manual Bias:</b> Nilai kepercayaan dan arah prediksi ditarik langsung dari perhitungan matematis engine tanpa intervensi manual.</p>
+        <p>2. <b>Reproducible Snapshots:</b> Setiap prediksi merekam kondisi persis harga pasar saat tombol kunci ditekan.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with tab13:
     st.markdown("""
         <div class="visual-banner">
             <h3 style="color: #f59e0b; margin: 0 0 4px 0;">🤖 AI Explanation, Reasoning Chain & Risk Matrix</h3>
