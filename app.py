@@ -7,7 +7,7 @@ from datetime import date, datetime
 import time
 
 st.set_page_config(
-    page_title="BBG-TERMINAL // ULTIMATE COMPLETE INSTITUTIONAL QUANT",
+    page_title="BBG-TERMINAL // SUPER PERFECT INSTITUTIONAL QUANT MAX",
     page_icon="🏛️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -35,13 +35,14 @@ else:
 st.session_state.last_action_timestamp = current_epoch
 
 with st.sidebar:
-    st.markdown("### TEMA TERMINAL")
-    theme_choice = st.selectbox("Pilih Estetika Visual", ["Bloomberg Midnight", "Matrix Emerald", "Cyberpunk Neon"])
+    st.markdown("### 🎨 ESTETIKA TEMA TERMINAL")
+    theme_choice = st.selectbox("Pilih Tema Visual", ["Bloomberg Midnight", "Matrix Emerald", "Cyberpunk Neon"])
     st.markdown("---")
-    st.markdown("### TELEGRAM PUSH ALERT")
+    st.markdown("### 📡 TELEGRAM PUSH ALERT")
+    st.markdown("<p style='font-size: 11px; color: #94a3b8;'>Fungsi: Kirim sinyal otomatis ke HP.<br>1. Cari <b>@BotFather</b> di Telegram, buat bot baru & ambil <b>Bot Token</b>.<br>2. Cari <b>@userinfobot</b> untuk ambil <b>Chat ID</b> Anda.</p>", unsafe_allow_html=True)
     tg_token = st.text_input("Bot Token", type="password")
     tg_chat = st.text_input("Chat ID")
-    if st.button("Kirim Signal Alert Test"):
+    if st.button("🔔 Kirim Signal Alert Test"):
         if tg_token and tg_chat:
             st.success("Signal Alert Berhasil Disimulasikan ke Telegram!")
         else:
@@ -51,27 +52,32 @@ if theme_choice == "Matrix Emerald":
     bg_main = "#022c22"
     card_bg = "#064e3b"
     accent = "#34d399"
+    border_style = "2px dashed #059669"
 elif theme_choice == "Cyberpunk Neon":
-    bg_main = "#18181b"
-    card_bg = "#27272a"
+    bg_main = "#09090b"
+    card_bg = "#18181b"
     accent = "#f43f5e"
+    border_style = "2px solid #f43f5e"
 else:
     bg_main = "#030712"
     card_bg = "#0b0f19"
     accent = "#3b82f6"
+    border_style = "1px solid #1f2937"
 
 st.markdown(f"""
     <style>
     .main {{ background-color: {bg_main}; color: #f3f4f6; font-family: 'Inter', sans-serif; }}
-    .stTabs [data-baseweb="tab-list"] {{ gap: 4px; background-color: {card_bg}; padding: 8px; border-radius: 8px; border: 1px solid #1f2937; overflow-x: auto; }}
+    .stTabs [data-baseweb="tab-list"] {{ gap: 4px; background-color: {card_bg}; padding: 8px; border-radius: 8px; border: {border_style}; overflow-x: auto; }}
     .stTabs [data-baseweb="tab"] {{ background-color: #111827; border-radius: 6px; color: #9ca3af; padding: 6px 12px; font-weight: 700; font-size: 11px; }}
     .stTabs [aria-selected="true"] {{ background-color: {accent} !important; color: #ffffff !important; }}
-    .terminal-header {{ background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border: 1px solid #3730a3; padding: 22px; border-radius: 12px; margin-bottom: 15px; border-left: 6px solid {accent}; }}
-    .card-box {{ background-color: {card_bg}; border: 1px solid #1f2937; padding: 20px; border-radius: 10px; margin-bottom: 15px; }}
-    .news-ticker {{ background-color: #111827; color: {accent}; padding: 12px 18px; font-family: 'Fira Code', monospace; border: 1px solid #1f2937; margin-bottom: 15px; border-radius: 8px; font-size: 12px; }}
-    .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: 1px solid #3730a3; padding: 18px; border-radius: 8px; margin-bottom: 15px; }}
+    .terminal-header {{ background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border: {border_style}; padding: 22px; border-radius: 12px; margin-bottom: 15px; border-left: 6px solid {accent}; }}
+    .card-box {{ background-color: {card_bg}; border: {border_style}; padding: 20px; border-radius: 10px; margin-bottom: 15px; }}
+    .news-ticker {{ background-color: #111827; color: {accent}; padding: 12px 18px; font-family: 'Fira Code', monospace; border: {border_style}; margin-bottom: 15px; border-radius: 8px; font-size: 12px; }}
+    .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: {border_style}; padding: 18px; border-radius: 8px; margin-bottom: 15px; }}
     .signal-buy {{ background-color: #065f46; color: #34d399; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
     .signal-sell {{ background-color: #7f1d1d; color: #f87171; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
+    .metric-card {{ background-color: {card_bg}; border: {border_style}; padding: 16px; border-radius: 8px; text-align: center; height: 115px; display: flex; flex-direction: column; justify-content: center; align-items: center; }}
+    .calendar-card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); border-left: 4px solid {accent}; padding: 12px; border-radius: 6px; margin-bottom: 8px; }}
     </style>
 """, unsafe_allow_html=True)
 
@@ -124,11 +130,24 @@ def get_next_events():
 (f_str, f_rem), (c_str, c_rem), (n_str, n_rem) = get_next_events()
 
 with st.sidebar:
-    st.markdown("### 🎛️ TERMINAL CONTROLS")
-    st.markdown("---")
-    st.markdown(f"• **FOMC:** {f_str} ({f_rem} Hari)")
-    st.markdown(f"• **CPI:** {c_str} ({c_rem} Hari)")
-    st.markdown(f"• **NFP:** {n_str} ({n_rem} Hari)")
+    st.markdown("### ⏳ TERMINAL CALENDAR")
+    st.markdown(f"""
+        <div class="calendar-card">
+            <span style="color: #60a5fa; font-size: 11px; font-weight: bold;">🎯 NEXT FOMC MEETING</span><br>
+            <b style="font-size: 12px;">{f_str}</b><br>
+            <span style="color: #34d399; font-size: 10px;">⏳ {f_rem} Hari Lagi</span>
+        </div>
+        <div class="calendar-card">
+            <span style="color: #38bdf8; font-size: 11px; font-weight: bold;">📊 NEXT CPI RELEASE</span><br>
+            <b style="font-size: 12px;">{c_str}</b><br>
+            <span style="color: #34d399; font-size: 10px;">⏳ {c_rem} Hari Lagi</span>
+        </div>
+        <div class="calendar-card">
+            <span style="color: #a855f7; font-size: 11px; font-weight: bold;">👥 NEXT NFP RELEASE</span><br>
+            <b style="font-size: 12px;">{n_str}</b><br>
+            <span style="color: #34d399; font-size: 10px;">⏳ {n_rem} Hari Lagi</span>
+        </div>
+    """, unsafe_allow_html=True)
     st.markdown("---")
     st.success("🟢 Enterprise Security Active")
 
@@ -233,11 +252,11 @@ with tab1:
     for i, (label, val, chg, cat) in enumerate(asset_list):
         with cols[i % 4]:
             st.markdown(f"""
-            <div class="card-box" style="text-align: center; padding: 16px;">
-                <span style="background-color: #111827; color: #60a5fa; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;">{cat}</span>
-                <p style="color: #94a3b8; font-size: 11px; margin: 8px 0 4px 0;">{label}</p>
-                <h3 style="color: #f3f4f6; margin: 0; font-size: 18px;">{val}</h3>
-                <p style="color: {'#34d399' if '-' not in chg else '#f87171'}; font-size: 11px; margin-top: 5px; font-weight: bold;">{chg}</p>
+            <div class="metric-card">
+                <span style="color: #60a5fa; font-size: 9px; font-weight: bold; text-transform: uppercase;">{cat}</span>
+                <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{label}</p>
+                <h3 style="color: #f3f4f6; margin: 0; font-size: 16px; font-weight: 800;">{val}</h3>
+                <p style="color: {'#34d399' if '-' not in chg else '#f87171'}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold;">{chg}</p>
             </div>
             """, unsafe_allow_html=True)
             
@@ -328,10 +347,14 @@ with tab4:
     with c3: st.metric("Hike Probability", f"{hike_prob:.1f}%")
     with c4: st.metric("Model Confidence", f"{confidence_score}%", "Institutional Grade")
     
-    st.markdown("""
+    fomc_stance_text = "DOVISH PIVOT / RATE CUT BIAS" if is_dovish else "HAWKISH / HIGHER FOR LONGER BIAS"
+    fomc_color = "#34d399" if is_dovish else "#f87171"
+    
+    st.markdown(f"""
     <div class="card-box" style="margin-top: 15px;">
-        <h4 style="color: #60a5fa; margin-top: 0;">🏛️ Proyeksi Mendalam Rapat FOMC (Max SOFR Model)</h4>
-        <p>• <b>Integrasi Sektor Lanjutan:</b> Model ini memproses ekspektasi kurva SOFR berjangka untuk menyaring noise pasar dan mengonfirmasi probabilitas pivot The Fed dengan tingkat kepercayaan di atas 93.8%.</p>
+        <h4 style="color: #60a5fa; margin-top: 0;">🏛️ Proyeksi Mendalam Rapat FOMC & Stance Kebijakan</h4>
+        <p>• <b>Sikap Kebijakan Utama (Stance):</b> <span style="color: {fomc_color}; font-weight: 800;">{fomc_stance_text}</span></p>
+        <p>• <b>Analisis Narasi The Fed:</b> Berdasarkan pembacaan kurva SOFR dan sentimen data ketenagakerjaan, The Fed diperkirakan akan memberikan sinyal penyesuaian suku bunga bertahap. Jika data tenaga kerja mendingin, sikap condong *dovish* akan menekan imbal hasil obligasi.</p>
     </div>
     """, unsafe_allow_html=True)
     
