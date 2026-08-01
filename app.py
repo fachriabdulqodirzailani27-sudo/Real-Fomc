@@ -35,7 +35,7 @@ else:
 st.session_state.last_action_timestamp = current_epoch
 
 with st.sidebar:
-    st.markdown("### 🎨 ESTETIKA TEMA TERMINAL")
+    st.markdown("### 🎨 ESTETIKA TEMA & BENTUK")
     theme_choice = st.selectbox("Pilih Tema Visual", ["Bloomberg Midnight", "Matrix Emerald", "Cyberpunk Neon"])
     st.markdown("---")
     st.markdown("### 📡 TELEGRAM PUSH ALERT")
@@ -52,31 +52,34 @@ if theme_choice == "Matrix Emerald":
     bg_main = "#022c22"
     card_bg = "#064e3b"
     accent = "#34d399"
-    border_style = "2px dashed #059669"
+    border_style = "2px dashed #34d399"
+    border_radius = "4px"
 elif theme_choice == "Cyberpunk Neon":
     bg_main = "#09090b"
     card_bg = "#18181b"
     accent = "#f43f5e"
     border_style = "2px solid #f43f5e"
+    border_radius = "16px"
 else:
     bg_main = "#030712"
     card_bg = "#0b0f19"
     accent = "#3b82f6"
-    border_style = "1px solid #1f2937"
+    border_style = "1px solid #3730a3"
+    border_radius = "10px"
 
 st.markdown(f"""
     <style>
     .main {{ background-color: {bg_main}; color: #f3f4f6; font-family: 'Inter', sans-serif; }}
-    .stTabs [data-baseweb="tab-list"] {{ gap: 4px; background-color: {card_bg}; padding: 8px; border-radius: 8px; border: {border_style}; overflow-x: auto; }}
+    .stTabs [data-baseweb="tab-list"] {{ gap: 4px; background-color: {card_bg}; padding: 8px; border-radius: {border_radius}; border: {border_style}; overflow-x: auto; }}
     .stTabs [data-baseweb="tab"] {{ background-color: #111827; border-radius: 6px; color: #9ca3af; padding: 6px 12px; font-weight: 700; font-size: 11px; }}
     .stTabs [aria-selected="true"] {{ background-color: {accent} !important; color: #ffffff !important; }}
-    .terminal-header {{ background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border: {border_style}; padding: 22px; border-radius: 12px; margin-bottom: 15px; border-left: 6px solid {accent}; }}
-    .card-box {{ background-color: {card_bg}; border: {border_style}; padding: 20px; border-radius: 10px; margin-bottom: 15px; }}
-    .news-ticker {{ background-color: #111827; color: {accent}; padding: 12px 18px; font-family: 'Fira Code', monospace; border: {border_style}; margin-bottom: 15px; border-radius: 8px; font-size: 12px; }}
-    .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: {border_style}; padding: 18px; border-radius: 8px; margin-bottom: 15px; }}
+    .terminal-header {{ background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border: {border_style}; padding: 22px; border-radius: {border_radius}; margin-bottom: 15px; border-left: 6px solid {accent}; }}
+    .card-box {{ background-color: {card_bg}; border: {border_style}; padding: 20px; border-radius: {border_radius}; margin-bottom: 15px; }}
+    .news-ticker {{ background-color: #111827; color: {accent}; padding: 12px 18px; font-family: 'Fira Code', monospace; border: {border_style}; margin-bottom: 15px; border-radius: {border_radius}; font-size: 12px; }}
+    .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: {border_style}; padding: 18px; border-radius: {border_radius}; margin-bottom: 15px; }}
     .signal-buy {{ background-color: #065f46; color: #34d399; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
     .signal-sell {{ background-color: #7f1d1d; color: #f87171; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
-    .metric-card {{ background-color: {card_bg}; border: {border_style}; padding: 16px; border-radius: 8px; text-align: center; height: 115px; display: flex; flex-direction: column; justify-content: center; align-items: center; }}
+    .metric-card {{ background-color: {card_bg}; border: {border_style}; padding: 16px; border-radius: {border_radius}; text-align: center; height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }}
     .calendar-card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); border-left: 4px solid {accent}; padding: 12px; border-radius: 6px; margin-bottom: 8px; }}
     </style>
 """, unsafe_allow_html=True)
@@ -254,19 +257,18 @@ with tab1:
             st.markdown(f"""
             <div class="metric-card">
                 <span style="color: #60a5fa; font-size: 9px; font-weight: bold; text-transform: uppercase;">{cat}</span>
-                <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{label}</p>
-                <h3 style="color: #f3f4f6; margin: 0; font-size: 16px; font-weight: 800;">{val}</h3>
-                <p style="color: {'#34d399' if '-' not in chg else '#f87171'}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold;">{chg}</p>
+                <p style="color: #94a3b8; font-size: 10px; margin: 4px 0 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center;">{label}</p>
+                <h3 style="color: #f3f4f6; margin: 0; font-size: 15px; font-weight: 800; text-align: center;">{val}</h3>
+                <p style="color: {'#34d399' if '-' not in chg else '#f87171'}; font-size: 11px; margin: 2px 0 0 0; font-weight: bold; text-align: center;">{chg}</p>
             </div>
             """, unsafe_allow_html=True)
             
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("### 📈 Visualisasi Grafik Pergerakan Indeks Global")
     chart_overview = pd.DataFrame({
-        "Hari": ["H-4", "H-3", "H-2", "H-1", "Hari H"],
         "Gold Index": [2340, 2355, 2368, 2375, data['Gold']['price']],
         "DXY Index": [104.8, 104.5, 104.3, 104.1, data['DXY']['price']]
-    }).set_index("Hari")
+    }, index=["H-4", "H-3", "H-2", "H-1", "Hari H"])
     st.line_chart(chart_overview)
 
 with tab2:
@@ -309,10 +311,9 @@ with tab2:
         
     st.markdown("### 📊 Visualisasi Perbandingan Probabilitas Dampak Data")
     chart_matrix = pd.DataFrame({
-        "Aset": ["XAUUSD", "USDJPY", "BTCUSD"],
         "Dampak CPI (%)": [88.2, 85.0, 82.5],
         "Dampak NFP (%)": [87.5, 84.0, 80.0]
-    }).set_index("Aset")
+    }, index=["XAUUSD", "USDJPY", "BTCUSD"])
     st.bar_chart(chart_matrix)
 
 with tab3:
@@ -360,9 +361,8 @@ with tab4:
     
     st.markdown("### 📈 Visualisasi Distribusi Probabilitas Kebijakan The Fed")
     chart_fomc = pd.DataFrame({
-        "Skenario": ["Hold Rate", "Rate Cut", "Rate Hike"],
         "Probabilitas (%)": [hold_prob, cut_prob, hike_prob]
-    }).set_index("Skenario")
+    }, index=["Hold Rate", "Rate Cut", "Rate Hike"])
     st.bar_chart(chart_fomc)
 
 with tab5:
@@ -388,9 +388,8 @@ with tab5:
     
     st.markdown("### 📈 Visualisasi Proyeksi Tren Emas 2 Bulan")
     chart_gold = pd.DataFrame({
-        "Bulan": ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4", "Bulan 2 (Target)"],
         "Proyeksi Harga (USD)": [data['Gold']['price'], data['Gold']['price']*1.01, data['Gold']['price']*1.018, data['Gold']['price']*1.025, data['Gold']['price']*1.04]
-    }).set_index("Bulan")
+    }, index=["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4", "Bulan 2 (Target)"])
     st.line_chart(chart_gold)
 
 with tab6:
