@@ -384,7 +384,11 @@ with tab2:
         <div class="card-box">
             <h4 style="color: #f59e0b; margin-top:0;">📌 CPI RELEASE (PROGNOSIS)</h4>
             <p>• <b>Model Confidence Index:</b> <b>92.5% (COOL / Melandai)</b></p>
+            <hr style="border-color: #1f2937;">
             <p>• 🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span></p>
+            <p>• 💱 USDJPY: <span class="signal-sell">SELL (BEARISH / TURUN)</span></p>
+            <p>• ₿ BTCUSD: <span class="signal-buy">BUY (BULLISH / LIKUIDITAS)</span></p>
+            <p style="font-size: 11px; color: #94a3b8; margin-top: 8px;"><b>Alasan Detail:</b> CPI melandai menekan DXY & Yields, memicu kejatuhan USDJPY dan lonjakan likuiditas untuk XAUUSD serta BTCUSD.</p>
         </div>
         """, unsafe_allow_html=True)
     with col_c2:
@@ -392,7 +396,11 @@ with tab2:
         <div class="card-box">
             <h4 style="color: #f59e0b; margin-top:0;">👥 NFP RELEASE (PROGNOSIS)</h4>
             <p>• <b>Model Confidence Index:</b> <b>91.8% (WEAK / Mendingin)</b></p>
+            <hr style="border-color: #1f2937;">
             <p>• 🪙 XAUUSD: <span class="signal-buy">BUY (SPIKE UP)</span></p>
+            <p>• 💱 USDJPY: <span class="signal-sell">SELL (BEARISH / TURUN)</span></p>
+            <p>• ₿ BTCUSD: <span class="signal-buy">BUY (BULLISH / LIKUIDITAS)</span></p>
+            <p style="font-size: 11px; color: #94a3b8; margin-top: 8px;"><b>Alasan Detail:</b> NFP mendingin memperkuat probabilitas pemotongan suku bunga, memicu likuidasi carry trade USDJPY dan dorongan risk-on pada BTCUSD & XAUUSD.</p>
         </div>
         """, unsafe_allow_html=True)
 
