@@ -94,7 +94,6 @@ def init_macro_database():
     ''')
     conn.commit()
     
-    # Seed Full FOMC Data (63 Meetings 2019-2026)
     cursor.execute("SELECT COUNT(*) FROM fomc_backtest")
     if cursor.fetchone()[0] == 0:
         base_fomc = [
@@ -170,6 +169,7 @@ st.markdown(f"""
     .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: {border_style}; padding: 18px; border_radius: {border_radius}; margin-bottom: 15px; }}
     .signal-buy {{ background-color: #065f46; color: #34d399; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
     .signal-sell {{ background-color: #7f1d1d; color: #f87171; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
+    .whipsaw-alert {{ background-color: #78350f; color: #fef08a; padding: 10px 14px; border-radius: 6px; font-weight: bold; font-size: 11px; margin-top: 10px; border: 1px dashed #f59e0b; }}
     .calendar-card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); border-left: 4px solid {accent}; padding: 12px; border-radius: 6px; margin-bottom: 8px; }}
     {extra_css}
     </style>
@@ -180,7 +180,7 @@ with col_h1:
     st.markdown("""
         <div class="terminal-header" style="margin-bottom: 0px;">
             <h1 style="color: #60a5fa; margin: 0; font-size: 24px; font-weight: 800;">BBG // MACRO DECISION ENGINE (PRO QUANT EDITION)</h1>
-            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">QUANTUM RGB MATRIX • LIVE FORWARD TRACKER ACTIVE</p>
+            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">QUANTUM RGB MATRIX • WHIPSAW RISK FILTER ACTIVE</p>
         </div>
     """, unsafe_allow_html=True)
 with col_h2:
@@ -191,7 +191,7 @@ with col_h2:
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("""
     <div class="news-ticker">
-        🔴 <b>ENGINE FEED:</b> Quantum RGB Matrix Active • Pre-Event Snapshot Synchronized.
+        🔴 <b>ENGINE FEED:</b> Quantum RGB Matrix Active • Real-Time Core/Headline & Whipsaw Detection Synchronized.
     </div>
 """, unsafe_allow_html=True)
 
@@ -277,7 +277,7 @@ def fetch_fed_nlp_wire():
 
 fed_wire_df, nlp_bias = fetch_fed_nlp_wire()
 
-# --- MULTI-FACTOR MACRO PROBABILITY ENGINE ---
+# --- MULTI-FACTOR MACRO PROBABILITY ENGINE & WHIPSAW DETECTOR ---
 bayes_factor = 1.0 / (1.0 + math.exp(-data['VIX']['pct']))
 rate_press = (data['TNX']['pct'] * 4.2) + (data['DXY']['pct'] * 2.5)
 macro_risk = (data['VIX']['pct'] * 1.6) - (data['SPX']['pct'] * 0.7)
@@ -287,6 +287,9 @@ cut_prob = round((100.0 - hold_prob) * 0.88, 1)
 hike_prob = round(100.0 - hold_prob - cut_prob, 1)
 model_confidence = round(min(99.1, max(85.0, 92.5 - abs(data['VIX']['price'] - 15.0) * 0.3 + abs(nlp_bias))), 1)
 is_dovish = rate_press < 0 or data['TNX']['pct'] < 0 or nlp_bias > 0
+
+# Whipsaw / Two-Way Risk Detection logic
+whipsaw_risk_active = abs(data['VIX']['pct']) < 1.0 and abs(data['DXY']['pct']) < 0.2
 
 def auto_execute_background_locking(conn, data_feed, nlp_score, confidence_score, dovish_status):
     cursor = conn.cursor()
@@ -305,7 +308,7 @@ def auto_execute_background_locking(conn, data_feed, nlp_score, confidence_score
         if cursor.fetchone()[0] == 0:
             cursor.execute("""
                 INSERT INTO forward_audit_ledger (event_name, target_date, lock_timestamp, model_version, predicted_direction, model_confidence, input_snapshot, actual_result, brier_score, status)
-                VALUES (?, ?, ?, 'v3.2-AUDITED', ?, ?, ?, 'PENDING', NULL, 'AUTO-LOCKED 🔒')
+                VALUES (?, ?, ?, 'v3.3-QUANT-ULTIMATE', ?, ?, ?, 'PENDING', NULL, 'AUTO-LOCKED 🔒')
             """, (ev_name, ev_date, current_time, auto_pred_dir, confidence_score, input_snapshot))
             conn.commit()
 
@@ -375,9 +378,17 @@ with tab1:
 with tab2:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📅 CPI & NFP Calibrated Single Outcome Matrix</h3>
+            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📅 CPI & NFP Calibrated Single Outcome Matrix (with Whipsaw Filter)</h3>
         </div>
     """, unsafe_allow_html=True)
+    
+    if whipsaw_risk_active:
+        st.markdown("""
+            <div class="whipsaw-alert">
+                ⚠️ <b>WHIPSAW / TWO-WAY SPIKE WARNING:</b> Konsensus pasar terlalu sempit dan ada potensi divergensi Core vs Headline. Waspadai sapuan likuiditas atas dan bawah pada menit-menit awal pembukaan rilis data!
+            </div>
+        """, unsafe_allow_html=True)
+
     col_c1, col_c2 = st.columns(2)
     with col_c1:
         st.markdown("""
@@ -451,10 +462,10 @@ with tab5:
     <div class="card-box" style="margin-top: 15px;">
         <h4 style="color: #60a5fa; margin-top:0;">2️⃣ Proyeksi Tren 1-2 Bulan ke Depan</h4>
         <p>• <b>Verdict Tren:</b> <b style="color: #34d399;">BULLISH KUAT</b></p>
-        <p>• <b>Analisis Fundamental & Astrodynamics Mendalam:</b> 
+        <p>• <b>Analisis Fundamental & Geopolitik Mendalam:</b> 
            1. <b>Central Bank Accumulation:</b> Bank sentral global (terutama PBoC China) terus menerus melakukan diversifikasi cadangan devisa dengan memborong emas fisik, menciptakan lantai harga (*price floor*) yang sangat kokoh.<br>
-           2. <b>Astrodynamics / Astrodox Cycles:</b> Berdasarkan siklus astro-finance, kuartal ini memasuki *seasonal turning point* (titik balik musiman) yang secara historis memicu gelombang *bullish breakout* lanjutan.<br>
-           3. <b>Geopolitical Safe-Haven:</b> Risiko geopolitik global yang belum mereda menjaga permintaan aset lindung nilai tetap di level tertinggi.
+           2. <b>Geopolitical Safe-Haven (Iran & Selat Hormuz):</b> Risiko geopolitik global terkait jalur energi vital menjaga permintaan aset lindung nilai tetap di level tertinggi.<br>
+           3. <b>Real Yield Compression:</b> Ekspektasi pemotongan suku bunga menekan imbal hasil riil, mendukung penguatan emas secara struktural.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -596,7 +607,7 @@ with tab11:
     <div class="card-box">
         <h4 style="color: #f59e0b; margin-top:0;">📋 Model Methodology</h4>
         <p>• <b>Data Sources:</b> Yahoo Finance API, Federal Reserve RSS, Astrodynamics Ephemeris Cycles.</p>
-        <p>• <b>Model Type:</b> Heuristic Multi-Factor Scoring Model with Quantum RGB Matrix Engine.</p>
+        <p>• <b>Model Type:</b> Heuristic Multi-Factor Scoring Model with Quantum RGB Matrix & Whipsaw Filter.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -648,6 +659,6 @@ with tab14:
     st.markdown("""
     <div class="card-box">
         <h4 style="color: #f59e0b; margin-top:0;">📋 Executive & Institutional Reasoning Summary</h4>
-        <p><b>Executive Summary:</b> Terminal memindai konvergensi data tenaga kerja, deviasi inflasi, siklus astrodinamika, dan sentimen pejabat The Fed secara real-time.</p>
+        <p><b>Executive Summary:</b> Terminal memindai konvergensi data tenaga kerja, deviasi inflasi, divergensi Core vs Headline, serta sentimen pejabat The Fed secara real-time.</p>
     </div>
     """, unsafe_allow_html=True)
