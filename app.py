@@ -169,7 +169,8 @@ st.markdown(f"""
     .visual-banner {{ background: linear-gradient(90deg, {card_bg} 0%, #1e1b4b 100%); border: {border_style}; padding: 18px; border_radius: {border_radius}; margin-bottom: 15px; }}
     .signal-buy {{ background-color: #065f46; color: #34d399; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
     .signal-sell {{ background-color: #7f1d1d; color: #f87171; padding: 4px 10px; border-radius: 4px; font-weight: 800; display: inline-block; font-size: 12px; }}
-    .whipsaw-alert {{ background-color: #78350f; color: #fef08a; padding: 10px 14px; border-radius: 6px; font-weight: bold; font-size: 11px; margin-top: 10px; border: 1px dashed #f59e0b; }}
+    .whipsaw-alert-cpi {{ background-color: #78350f; color: #fef08a; padding: 12px 16px; border-radius: 6px; font-weight: bold; font-size: 11px; margin-bottom: 10px; border: 1px dashed #f59e0b; }}
+    .whipsaw-alert-nfp {{ background-color: #581c87; color: #f3e8ff; padding: 12px 16px; border-radius: 6px; font-weight: bold; font-size: 11px; margin-bottom: 10px; border: 1px dashed #c084fc; }}
     .calendar-card {{ background: linear-gradient(135deg, #111827 0%, #1f2937 100%); border-left: 4px solid {accent}; padding: 12px; border-radius: 6px; margin-bottom: 8px; }}
     {extra_css}
     </style>
@@ -180,7 +181,7 @@ with col_h1:
     st.markdown("""
         <div class="terminal-header" style="margin-bottom: 0px;">
             <h1 style="color: #60a5fa; margin: 0; font-size: 24px; font-weight: 800;">BBG // MACRO DECISION ENGINE (PRO QUANT EDITION)</h1>
-            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">QUANTUM RGB MATRIX • WHIPSAW RISK FILTER ACTIVE</p>
+            <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 11px; font-weight: 600;">QUANTUM RGB MATRIX • DUAL CPI & NFP WHIPSAW RISK FILTER ACTIVE</p>
         </div>
     """, unsafe_allow_html=True)
 with col_h2:
@@ -191,7 +192,7 @@ with col_h2:
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("""
     <div class="news-ticker">
-        🔴 <b>ENGINE FEED:</b> Quantum RGB Matrix Active • Real-Time Core/Headline & Whipsaw Detection Synchronized.
+        🔴 <b>ENGINE FEED:</b> Quantum RGB Matrix Active • Core/Headline & NFP Wage Dispersion Filter Synchronized.
     </div>
 """, unsafe_allow_html=True)
 
@@ -288,8 +289,9 @@ hike_prob = round(100.0 - hold_prob - cut_prob, 1)
 model_confidence = round(min(99.1, max(85.0, 92.5 - abs(data['VIX']['price'] - 15.0) * 0.3 + abs(nlp_bias))), 1)
 is_dovish = rate_press < 0 or data['TNX']['pct'] < 0 or nlp_bias > 0
 
-# Whipsaw / Two-Way Risk Detection logic
-whipsaw_risk_active = abs(data['VIX']['pct']) < 1.0 and abs(data['DXY']['pct']) < 0.2
+# Dual Whipsaw Risk Filters for CPI and NFP
+cpi_whipsaw_active = abs(data['VIX']['pct']) < 1.2
+nfp_whipsaw_active = abs(data['DXY']['pct']) < 0.35
 
 def auto_execute_background_locking(conn, data_feed, nlp_score, confidence_score, dovish_status):
     cursor = conn.cursor()
@@ -308,7 +310,7 @@ def auto_execute_background_locking(conn, data_feed, nlp_score, confidence_score
         if cursor.fetchone()[0] == 0:
             cursor.execute("""
                 INSERT INTO forward_audit_ledger (event_name, target_date, lock_timestamp, model_version, predicted_direction, model_confidence, input_snapshot, actual_result, brier_score, status)
-                VALUES (?, ?, ?, 'v3.3-QUANT-ULTIMATE', ?, ?, ?, 'PENDING', NULL, 'AUTO-LOCKED 🔒')
+                VALUES (?, ?, ?, 'v3.4-ULTIMATE', ?, ?, ?, 'PENDING', NULL, 'AUTO-LOCKED 🔒')
             """, (ev_name, ev_date, current_time, auto_pred_dir, confidence_score, input_snapshot))
             conn.commit()
 
@@ -378,19 +380,19 @@ with tab1:
 with tab2:
     st.markdown("""
         <div class="visual-banner">
-            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📅 CPI & NFP Calibrated Single Outcome Matrix (with Whipsaw Filter)</h3>
+            <h3 style="color: #38bdf8; margin: 0 0 4px 0;">📅 CPI & NFP Calibrated Single Outcome Matrix (with Dual Whipsaw Filter)</h3>
         </div>
     """, unsafe_allow_html=True)
     
-    if whipsaw_risk_active:
-        st.markdown("""
-            <div class="whipsaw-alert">
-                ⚠️ <b>WHIPSAW / TWO-WAY SPIKE WARNING:</b> Konsensus pasar terlalu sempit dan ada potensi divergensi Core vs Headline. Waspadai sapuan likuiditas atas dan bawah pada menit-menit awal pembukaan rilis data!
-            </div>
-        """, unsafe_allow_html=True)
-
     col_c1, col_c2 = st.columns(2)
+    
     with col_c1:
+        if cpi_whipsaw_active:
+            st.markdown("""
+                <div class="whipsaw-alert-cpi">
+                    ⚠️ <b>CPI WHIPSAW / TWO-WAY SPIKE WARNING:</b> Konsensus terlalu sempit & ada potensi divergensi Core vs Headline. Waspadai sapuan likuiditas atas dan bawah pada menit-menit awal pembukaan rilis CPI!
+                </div>
+            """, unsafe_allow_html=True)
         st.markdown("""
         <div class="card-box">
             <h4 style="color: #f59e0b; margin-top:0;">📌 CPI RELEASE (PROGNOSIS)</h4>
@@ -402,7 +404,14 @@ with tab2:
             <p style="font-size: 11px; color: #94a3b8; margin-top: 8px;"><b>Alasan Detail:</b> CPI melandai menekan DXY & Yields, memicu kejatuhan USDJPY dan lonjakan likuiditas untuk XAUUSD serta BTCUSD.</p>
         </div>
         """, unsafe_allow_html=True)
+        
     with col_c2:
+        if nfp_whipsaw_active:
+            st.markdown("""
+                <div class="whipsaw-alert-nfp">
+                    ⚠️ <b>NFP WHIPSAW / TWO-WAY SPIKE WARNING:</b> Deviasi data ADP vs Jobless Claims tipis & potensi benturan Wage Inflation. Waspadai whipsaw instan sebelum tren NFP terbentuk!
+                </div>
+            """, unsafe_allow_html=True)
         st.markdown("""
         <div class="card-box">
             <h4 style="color: #f59e0b; margin-top:0;">👥 NFP RELEASE (PROGNOSIS)</h4>
@@ -607,7 +616,7 @@ with tab11:
     <div class="card-box">
         <h4 style="color: #f59e0b; margin-top:0;">📋 Model Methodology</h4>
         <p>• <b>Data Sources:</b> Yahoo Finance API, Federal Reserve RSS, Astrodynamics Ephemeris Cycles.</p>
-        <p>• <b>Model Type:</b> Heuristic Multi-Factor Scoring Model with Quantum RGB Matrix & Whipsaw Filter.</p>
+        <p>• <b>Model Type:</b> Heuristic Multi-Factor Scoring Model with Quantum RGB Matrix & Dual Whipsaw Filter.</p>
     </div>
     """, unsafe_allow_html=True)
 
